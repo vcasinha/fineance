@@ -8,6 +8,7 @@
 		<div class="container">
 			<div class="row" ng-controller="frontController">
 				<div class="col-xs-12">
+					<button class="btn btn-primary" ng-click="addTransaction()">Add</button>
 					<ul>
 						<li ng-repeat="p in transactions">
 							<span>{{p.description}}</span>
