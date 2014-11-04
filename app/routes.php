@@ -33,13 +33,14 @@ Route::group(array('prefix' => 'api'), function()
     Route::get('category/{id}/transactions', 'CategoryController@getTransactions');
 });
 
+//Authentication routes
 Route::post('auth/login', 'AuthController@login');
 Route::get('auth/logout', 'AuthController@logout');
 Route::get('auth/check', 'AuthController@check');
 
 Route::get('/', function()
 {
-    return View::make('hello');
+    return View::make('application');
 });
 
 
