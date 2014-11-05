@@ -1,0 +1,23 @@
+<div class="col-xs-12">
+	<form>
+		<div class="form-group">
+			<label>Description</label>
+			<input type="text" class="form-control" ng-model="transaction.description" placeholder="Description"/>
+		</div>
+		<div class="form-group">
+			<label>Category</label>
+			<select class="form-control" ng-model="transaction.category_id">
+				<option ng-repeat="category in categories" value="{{category.id}}">{{category.description}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Date</label>
+			<input type="text" class="form-control" ng-model="transaction.transaction_at" placeholder="Date"/>
+		</div>
+		<div class="form-group">
+			<label>Amount</label>
+			<input type="number" class="form-control" ng-model="transaction.amount" placeholder="10.32"/>
+		</div>
+		<button ng-click="addTransaction(transaction)" class="btn">Debug</button>
+	</form>
+</div>

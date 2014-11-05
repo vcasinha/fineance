@@ -13,6 +13,7 @@
 
 use Carbon\Carbon;
 
+//API Routes
 Route::group(array('prefix' => 'api'), function()
 {
     Route::get('/', function()
@@ -38,12 +39,13 @@ Route::post('auth/login', 'AuthController@login');
 Route::get('auth/logout', 'AuthController@logout');
 Route::get('auth/check', 'AuthController@check');
 
+//Application routes
 Route::get('/', function()
 {
     return View::make('application');
 });
 
-
+//Fill database
 Route::get('fill', function(){
     $cat = new Category();
     $cat->name = "Somename";

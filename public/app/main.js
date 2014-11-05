@@ -1,34 +1,32 @@
-var app = angular.module('fineance', ['ngResource', 'ngRoute']);
+var app = angular.module('fineance', ['ngResource', 'ui.router', 'fineance.transactions']);
 
-app.config(['$resourceProvider', function($resourceProvider) {
-	// Don't strip trailing slashes from calculated URLs
+app.config(['$stateProvider', '$urlRouterProvider', '$resourceProvider', function ($stateProvider,   $urlRouterProvider, $resourceProvider) {
 	$resourceProvider.defaults.stripTrailingSlashes = false;
-}]);
+	
+	$urlRouterProvider
+        // The `when` method says if the url is ever the 1st param, then redirect to the 2nd param
+        // Here we are just setting up some convenience urls.
+        .when('/c?id', '/contacts/:id')
+        .when('/user/:id', '/contacts/:id')
 
-app.factory('Transactions', ['$resource', function($resource) {
-	return $resource('/api/transaction/:id', null,
-    {
-        'update': { method:'PUT' }
-    });
-}]);
+        // If the url is ever invalid, e.g. '/asdf', then redirect to '/' aka the home state
+        .otherwise('/');
+	
+	$stateProvider
+        .state("home", {
+          // Use a url of "/" to set a state as the "index".
+          url: "/",
 
-app.controller('frontController', ['$scope', 'Transactions', function ($scope, Transactions) {
-	
-	var update_list = function(){
-		$scope.transactions = Transactions.query();
-	}
-	
-	$scope.addTransaction = function(){
-		var t = new Transactions();
-		t.amount = 33.19;
-		t.description = "Some description";
-		t.category_id = 1;
-		t.transaction_at = '2014-11-04';
-		t.$save(function(){
-			update_list();
-		});
-		
-	}
-	
-	update_list();
+          // Example of an inline template string. By default, templates
+          // will populate the ui-view within the parent state's template.
+          // For top level states, like this one, the parent template is
+          // the index.html file. So this template will be inserted into the
+          // ui-view within index.html.
+          template: '<p class="lead">Welcome to the UI-Router Demo</p>' +
+            '<p>Use the menu above to navigate. ' +
+            'Pay attention to the <code>$state</code> and <code>$stateParams</code> values below.</p>' +
+            '<p>Click these links—<a href="#/c?id=1">Alice</a> or ' +
+            '<a href="#/user/42">Bob</a>—to see a url redirect in action.</p>'
+
+        });
 }]);
