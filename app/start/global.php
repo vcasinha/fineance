@@ -51,19 +51,6 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 });
 
-App::error(function(Exception $exception)
-{
-    Log::error($exception);
-
-	$debug = [
-		'exception' => $exception->getMessage(),
-		'file' => $exception->getFile(),
-		'line' => $exception->getLine()
-	];
-
-    return $debug;
-});
-
 /*
 |--------------------------------------------------------------------------
 | Maintenance Mode Handler

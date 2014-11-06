@@ -1,0 +1,32 @@
+<form name="form" novalidate="">
+	<div class="col-xs-6">
+		<h3>Add transaction</h3>
+		<div class="form-group">
+			<label>Description</label>
+			<input type="text" class="form-control" ng-model="transaction.description" placeholder="payment" required/>
+		</div>
+		<div class="form-group">
+			<label>Transaction Date</label>
+            <p class="input-group">
+                <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="transaction.transaction_at" is-open="opened" show-weeks="false" placeholder="2014-11-30"/>
+                <span class="input-group-addon" ng-click="openCalendar($event)">
+					<i class="glyphicon glyphicon-calendar"></i>
+				</span>
+            </p>
+		</div>
+		<div class="form-group">
+			<label>Category</label>
+			<select class="form-control" ng-model="transaction.category_id">
+				<option ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Amount</label>
+			<div class="input-group">
+				<input type="number" class="form-control" ng-model="transaction.amount" placeholder="10.32" required/>
+				<span class="input-group-addon">€</span>
+			</div>
+		</div>
+		<button ng-click="addTransaction(transaction)" class="btn" ng-disabled="form.$invalid">Add</button>
+	</div>
+</form>

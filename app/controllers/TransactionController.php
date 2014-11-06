@@ -15,7 +15,11 @@
 		*/
 		public function index()
 		{
-			$transactions = Transaction::all();
+			$order_by = Input::get('order_by', 'transaction_at');
+			$order_direction = Input::get('order_direction', 'desc');
+			$offset = Input::get('offset', 0);
+			$limit = Input::get('limit', 30);
+			$transactions = Transaction::orderBy($order_by, $order_direction)->skip($offset)->take($limit)->get();
 			return $transactions;
 		}
 		

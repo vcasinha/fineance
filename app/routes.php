@@ -29,6 +29,12 @@ Route::group(array('prefix' => 'api'), function()
     //Transaction routes
     Route::resource('transaction', 'TransactionController');
     
+    //Group routes
+    Route::resource('group', 'GroupController');
+    
+    //Group Category routes
+    Route::resource('group/{id}/category', 'GroupCategoryController');
+    
     //Category routes
     Route::resource('category', 'CategoryController');
     Route::get('category/{id}/transactions', 'CategoryController@getTransactions');

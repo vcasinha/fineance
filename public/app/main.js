@@ -1,4 +1,14 @@
-var app = angular.module('fineance', ['ngResource', 'ui.router', 'fineance.transactions']);
+var modules = [
+	'ngResource', 
+	'ui.router', 
+	'ui.bootstrap',
+	'fineance.services',
+	'fineance.transaction',
+	'fineance.category',
+	'fineance.group'
+];
+	
+var app = angular.module('fineance', modules);
 
 app.config(['$stateProvider', '$urlRouterProvider', '$resourceProvider', function ($stateProvider,   $urlRouterProvider, $resourceProvider) {
 	$resourceProvider.defaults.stripTrailingSlashes = false;
@@ -30,3 +40,12 @@ app.config(['$stateProvider', '$urlRouterProvider', '$resourceProvider', functio
 
         });
 }]);
+
+app.directive('focus', function() {
+	return function($scope, elem, attr) {
+		elem[0].focus();
+		$scope.$on(attr.focus, function(e) {
+			elem[0].focus();
+		});
+	};
+});
