@@ -12,7 +12,7 @@ class CreateGroupsCategories extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('groups_categories', function(Blueprint $table)
+		Schema::create('group_categories', function(Blueprint $table)
 		{
 			$table->increments('id');
 			$table->integer('group_id')->index('group_id');
@@ -29,7 +29,7 @@ class CreateGroupsCategories extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('groups_categories');
+		Schema::drop('group_categories');
 	}
 
 }

@@ -18,7 +18,7 @@
 		    </tr>
 		    <tr ng-repeat="record in records">
 				<td>{{record.description}}</td>
-				<td>{{categories[record.category_id].name}}</td>
+				<td>{{getCategory(record.category_id).name}}</td>
 				<td>{{record.transaction_at}}</td>
 				<td>{{record.amount}}€</td>
 				<td>

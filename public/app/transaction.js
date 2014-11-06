@@ -34,6 +34,19 @@ function ($scope, Transaction, Category) {
 	
 	$scope.categories = Category.query();
 	
+	$scope.getCategory = function(id){
+		var selected = {
+			name: "UNDEFINED"
+		};
+		angular.forEach($scope.categories, function(category){
+			if(category.id === id){
+				selected = category;
+			}
+		});
+		
+		return selected;
+	}
+	
 	$scope.destroy = function(transaction){
 		console.log("transaction.delete", transaction);
 		transaction.$delete(function(){

@@ -3,9 +3,11 @@ var modules = [
 	'ui.router', 
 	'ui.bootstrap',
 	'fineance.services',
+	'fineance.directives',
 	'fineance.transaction',
 	'fineance.category',
-	'fineance.group'
+	'fineance.group',
+	'fineance.statistics'
 ];
 	
 var app = angular.module('fineance', modules);

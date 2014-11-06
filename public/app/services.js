@@ -27,3 +27,25 @@ app.factory('GroupCategory', ['$resource', function($resource) {
         'update': { method:'PUT' }
     });
 }]);
+
+app.factory('Stats', ['$resource', 
+function($resource){
+	var params = {
+		period: '@period',
+	};
+	
+	var options = {
+		'index': {
+			method: 'GET',
+			url: '/api/stats/summary/:period',
+			isArray: true
+		},
+		'categories': {
+			method: 'GET',
+			url: '/api/categories/summary/period/:period',
+			isArray: true
+		}
+	};
+	
+	return $resource('/api/stats/summary/:period', params, options);	
+}]);

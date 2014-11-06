@@ -28,7 +28,8 @@ Route::group(array('prefix' => 'api'), function()
     
     //Transaction routes
     Route::resource('transaction', 'TransactionController');
-    
+    Route::get('stats/summary/{year?}', 'TransactionController@summaryYear');
+    Route::get('categories/summary/period/{month?}', 'TransactionController@summaryCategoriesPeriod');
     //Group routes
     Route::resource('group', 'GroupController');
     

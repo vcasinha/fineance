@@ -27,9 +27,9 @@
 				        <li><a ui-sref="category">Categories</a></li>
 				        <li><a ui-sref="group">Groups</a></li>
 				        <li class="dropdown">
-				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Settings <span class="caret"></span></a>
+				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistics <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-				            	<li><a ui-sref="category">Categories</a></li>
+				            	<li><a ui-sref="stats">Index</a></li>
 					            <li class="divider"></li>
 					            <li><a href="#">Separated link</a></li>
 					            <li class="divider"></li>
@@ -77,9 +77,11 @@
 		<script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 		<script src="/app/main.js"></script>
+		<script src="/app/directives.js"></script>
 		<script src="/app/transaction.js"></script>
 		<script src="/app/category.js"></script>
 		<script src="/app/group.js"></script>
 		<script src="/app/services.js"></script>
+		<script src="/app/statistics.js"></script>
 	</body>
 </html>

@@ -96,4 +96,46 @@
 			
 			return $transaction;
 		}
+		
+		public function summaryCategoriesPeriod($period = NULL)
+		{		
+			// lists() does not accept raw queries,
+			// so you have to specify the SELECT clause
+			$summary = Transaction::select(array(
+			        DB::raw('category_id as `category_id`'),
+			        DB::raw('COUNT(*) as `count`'),
+			        DB::raw('SUM(amount) as `total`'),
+			        DB::raw('MIN(amount) as `minimum`'),
+			        DB::raw('ROUND(AVG(amount), 2) as `average`'),
+			        DB::raw('MAX(amount) as `maximum`')
+			    ))
+			    ->whereRaw("DATE_FORMAT(transaction_at, '%Y-%m') = '" . $period . "'")
+			    ->groupBy('category_id')
+			    ->orderBy('category_id', 'ASC')->get();
+			    //->lists('count', 'date', 'amount');
+			return $summary;
+		}
+		
+		public function summaryYear($year = NULL)
+		{
+			if($year == NULL)
+			{
+				$year = date("Y");
+			}
+			
+			$date = new DateTime();
+			
+			// lists() does not accept raw queries,
+			// so you have to specify the SELECT clause
+			$summary = Transaction::select(array(
+			        DB::raw('MONTH(`transaction_at`) as `month`'),
+			        DB::raw('COUNT(*) as `count`'),
+			        DB::raw('SUM(amount) as `total`')
+			    ))
+			    //->where('created_at', '>', $date)
+			    ->groupBy('month')
+			    ->orderBy('month', 'DESC')->get();
+			    //->lists('count', 'date', 'amount');
+			return $summary;
+		}
 	}
