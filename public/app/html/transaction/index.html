@@ -27,6 +27,27 @@
 					</button>
 				</td>
 		    </tr>
+		    <tr>
+			    <form name="form" novalidate="">
+				<td><input type="text" pattern=".{3,}" class="form-control" ng-model="transaction.description" required/></td>
+				<td>
+					<select class="form-control" ng-model="transaction.category_id" required>
+						<option ng-repeat="category in categories" value="{{category.id}}">{{category.name}}</option>
+					</select>
+				</td>
+				<td>
+					<input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="transaction.transaction_at" is-open="opened" show-weeks="false" placeholder="2014-11-30" ng-click="openCalendar($event)" required/>
+				</td>
+				<td>
+					<input type="number" class="form-control" ng-model="transaction.amount" placeholder="10.32" required/>
+				</td>
+				<td>
+					<button ng-click="create(transaction)" class="btn btn-xs btn-primary" ng-disabled="form.$invalid">
+						<i class="glyphicon glyphicon-plus"></i>
+					</button>
+				</td>
+				</form>
+		    </tr>
 		</table>
 	</div>
 </div>

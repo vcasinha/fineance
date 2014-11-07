@@ -25,11 +25,14 @@ function ($stateProvider,   $urlRouterProvider) {
 		});
 }]);
 
-app.controller('TransactionIndexController', ['$scope', 'Transaction', 'Category',
-function ($scope, Transaction, Category) {
+app.controller('TransactionIndexController', ['$scope', '$state', 'Transaction', 'Category',
+function ($scope, $state, Transaction, Category) {
 	
 	$scope.refresh = function(){
-		$scope.records = Transaction.query();
+		Transaction.query(function(data){
+			$scope.records = data;
+			console.log(arguments);
+		});
 	};
 	
 	$scope.categories = Category.query();
@@ -55,6 +58,27 @@ function ($scope, Transaction, Category) {
 	};
 	
 	$scope.refresh();
+	
+	$scope.opened = false;
+    $scope.openCalendar = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened = !$scope.opened;
+    };
+    
+	$scope.transaction = {};
+	$scope.categories = Category.query();
+	$scope.create = function(transaction){
+		console.log("transaction.add", transaction);
+		
+		var t = new Transaction(transaction);
+		t.$save()
+			.then(function(){
+				$scope.refresh();
+			}, function(){
+				alert('failed');
+			});
+	};
 }]);
 
 app.controller('TransactionCreateController', ['$scope', '$state', 'Transaction', 'Category', 
