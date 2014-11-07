@@ -10,7 +10,7 @@ app.directive('tabletransactions', function() {
     };
 });
 
-app.config(['$stateProvider', '$urlRouterProvider', 
+app.config(['$stateProvider', '$urlRouterProvider',
 function ($stateProvider,   $urlRouterProvider) {
 	$stateProvider
 		.state('transaction', {
@@ -25,15 +25,18 @@ function ($stateProvider,   $urlRouterProvider) {
 		});
 }]);
 
-app.controller('TransactionIndexController', ['$scope', 'Transaction', 'Category',
-function ($scope, Transaction, Category) {
-	
-	$scope.refresh = function(){
-		$scope.records = Transaction.query();
+app.controller('TransactionIndexController', ['$scope', '$state', 'Transaction', 'Category',
+function ($scope, $state, Transaction, Category) {
+	$scope.record = [];
+	$scope.refresh = function(page){
+		Transaction.query({offset: page * 10}, function(pagination){
+			$scope.records = pagination.data;
+			$scope.totalItems = pagination.total;
+		});
 	};
-	
+
 	$scope.categories = Category.query();
-	
+
 	$scope.getCategory = function(id){
 		var selected = {
 			name: "UNDEFINED"
@@ -43,41 +46,78 @@ function ($scope, Transaction, Category) {
 				selected = category;
 			}
 		});
-		
+
 		return selected;
-	}
-	
+	};
+
 	$scope.destroy = function(transaction){
 		console.log("transaction.delete", transaction);
 		transaction.$delete(function(){
 			$scope.refresh();
 		});
 	};
-	
-	$scope.refresh();
-}]);
 
-app.controller('TransactionCreateController', ['$scope', '$state', 'Transaction', 'Category', 
-function ($scope, $state, Transaction, Category) {
-	
+	$scope.refresh(0);
+
+	//Pagination
+	$scope.pageChanged = function(){
+		console.log("transactions.pagechanged", $scope.currentPage, $scope.totalItems);
+		$scope.refresh($scope.currentPage);
+	};
+
+	//Create record related
 	$scope.opened = false;
     $scope.openCalendar = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.opened = !$scope.opened;
     };
-    
+
 	$scope.transaction = {};
 	$scope.categories = Category.query();
+	$scope.allowCreate = false;
+
+	$scope.$watch('form.$invalid', function(){
+		$scope.allowCreate = $scope.form.$valid;
+	});
 	$scope.create = function(transaction){
+		$scope.allowCreate = false,
 		console.log("transaction.add", transaction);
-		
+
 		var t = new Transaction(transaction);
 		t.$save()
 			.then(function(){
-				$state.go('transaction');
+				$scope.allowCreate = true;
+				transaction.description = '';
+				transaction.amount = '';
+				$scope.refresh();
 			}, function(){
 				alert('failed');
 			});
+	};
+}]);
+
+app.controller('TransactionCreateController', ['$scope', '$state', 'Transaction', 'Category',
+function ($scope, $state, Transaction, Category) {
+
+	$scope.opened = false;
+    $scope.openCalendar = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened = !$scope.opened;
+    };
+
+	$scope.transaction = {};
+	$scope.categories = Category.query();
+	$scope.create = function(transaction){
+	console.log("transaction.add", transaction);
+
+	var t = new Transaction(transaction);
+	t.$save()
+		.then(function(){
+			$state.go('transaction');
+		}, function(){
+			alert('failed');
+		});
 	};
 }]);

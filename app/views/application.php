@@ -19,7 +19,7 @@
 					</button>
 					<a class="navbar-brand" ui-sref="home">Fineance</a>
 			    </div>
-		
+
 			    <!-- Collect the nav links, forms, and other content for toggling -->
 			    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			    	<ul class="nav navbar-nav">
@@ -37,7 +37,7 @@
 				        	</ul>
 				        </li>
 			      	</ul>
-			      	
+
 			      	<!-- Search -->
 				  	<form class="navbar-form navbar-left" role="search">
 				        <div class="form-group">
@@ -45,7 +45,7 @@
 				        </div>
 						<button type="submit" class="btn btn-default">Submit</button>
 			      	</form>
-			      	
+
 			      	<!-- Right options -->
 				  	<ul class="nav navbar-nav navbar-right">
 				        <li><a href="#">Link</a></li>
@@ -63,10 +63,10 @@
 			    </div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
 		</nav>
-		
+
 		<!-- Main view -->
 		<div class="container" ui-view></div>
-		
+
 		<!-- Scripts -->
 		<script src="/bower_components/jquery/dist/jquery.min.js"></script>
 		<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
