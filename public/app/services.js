@@ -3,7 +3,8 @@ var app = angular.module('fineance.services', ['ui.router', 'ui.bootstrap']);
 app.factory('Transaction', ['$resource', function($resource) {
 	return $resource('/api/transaction/:id', {id:'@id'},
     {
-        'update': { method:'PUT' }
+        'update': {method:'PUT'},
+        'query': {method: 'GET'}
     });
 }]);
 
@@ -28,12 +29,12 @@ app.factory('GroupCategory', ['$resource', function($resource) {
     });
 }]);
 
-app.factory('Stats', ['$resource', 
+app.factory('Stats', ['$resource',
 function($resource){
 	var params = {
 		period: '@period',
 	};
-	
+
 	var options = {
 		'index': {
 			method: 'GET',
@@ -46,6 +47,6 @@ function($resource){
 			isArray: true
 		}
 	};
-	
-	return $resource('/api/stats/summary/:period', params, options);	
+
+	return $resource('/api/stats/summary/:period', params, options);
 }]);

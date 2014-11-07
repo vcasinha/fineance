@@ -21,33 +21,33 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider,   
 
 app.controller('GroupIndexController', ['$scope', 'Group',
 function ($scope, Group) {
-	
+
 	$scope.refresh = function(){
 		$scope.records = Group.query();
 	};
-	
+
 	$scope.destroy = function(record){
 		console.log("category.destroy", record);
-		
+
 		record.$delete()
 			.then(
 			function(){
 				$scope.refresh();
-			}, 
+			},
 			function(){
 				console.error(arguments);
 			});
 	};
-	
+
 	$scope.refresh();
 }]);
 
-app.controller('GroupCreateController', ['$scope', '$state', 'Group', 
-function ($scope, $state, Group) {    
+app.controller('GroupCreateController', ['$scope', '$state', 'Group',
+function ($scope, $state, Group) {
 	$scope.record = {};
 	$scope.create = function(record){
 		console.log("group.create", record);
-		
+
 		var t = new Group(record);
 		t.$save()
 			.then(function(){
@@ -60,7 +60,7 @@ function ($scope, $state, Group) {
 
 app.controller('GroupEditController', [
 '$scope', '$state', '$stateParams', 'Group', 'Category', 'GroupCategory',
-function ($scope, $state, $stateParams, Group, Category, GroupCategory) {    
+function ($scope, $state, $stateParams, Group, Category, GroupCategory) {
 	$scope.record = Group.get($stateParams,function(){
 			refresh_group_categories($scope.record.id);
 		});
@@ -73,7 +73,7 @@ function ($scope, $state, $stateParams, Group, Category, GroupCategory) {
 	$scope.remove = function(category){
 		console.log("group_category.remove", category);
 		angular.forEach($scope.group_categories, function(group_category){
-			
+
 			if(category.id == group_category.category_id)
 			{
 				console.log("group_category.delete", group_category);
@@ -81,25 +81,25 @@ function ($scope, $state, $stateParams, Group, Category, GroupCategory) {
 					.then(function(){
 						refresh_group_categories($scope.record.id);
 					});
-				
+
 				return false;
 			}
-			
+
 		});
 	};
 
 	$scope.toggle = function(category){
 		console.log("category.toggle", category);
-		
+
 		if($scope.inGroup(category)){
 			$scope.remove(category);
 		}
 		else{
 			var group_category = {
-				group_id: $scope.record.id, 
+				group_id: $scope.record.id,
 				category_id: category.id
 			};
-			
+
 			console.log("group_category.create", group_category);
 			var record = new GroupCategory(group_category);
 			record.$save()
@@ -107,7 +107,7 @@ function ($scope, $state, $stateParams, Group, Category, GroupCategory) {
 					refresh_group_categories($scope.record.id);
 				});
 		}
-	}
+	};
 
 	$scope.inGroup = function(category){
 		var found = false;
@@ -120,12 +120,12 @@ function ($scope, $state, $stateParams, Group, Category, GroupCategory) {
 				//console.log("category.found", group_category);
 				return false;
 			}
-			
+
 		});
-		
+
 		return found;
 	};
-	
+
 	$scope.categories = Category.query();
 
 	$scope.save = function(record){
