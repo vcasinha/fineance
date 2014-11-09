@@ -18,10 +18,10 @@ function ($stateProvider,   $urlRouterProvider) {
 			templateUrl: 'app/html/transaction/index.html',
 			controller: 'TransactionIndexController'
 		})
-		.state('transaction-create', {
-			url: '/transaction/create',
-			templateUrl: 'app/html/transaction/create.html',
-			controller: 'TransactionCreateController'
+		.state('transaction-categorize', {
+			url: '/transaction/categorize',
+			templateUrl: 'app/html/transaction/categorize.html',
+			controller: 'TransactionCategorizeController'
 		});
 }]);
 
@@ -97,5 +97,58 @@ function ($scope, $state, Transaction, Category) {
 			}, function(){
 				alert('failed');
 			});
+	};
+}]);
+
+app.controller('TransactionCategorizeController', ['$scope', '$state', 'Transaction', 'Category',
+function ($scope, $state, Transaction, Category) {
+	$scope.records = [];
+	$scope.refresh = function(page){
+		Transaction.query({offset: page * 10, whereField:'category_id', whereValue: 0}, function(pagination){
+			console.log("categorize.refresh", pagination);
+			$scope.records = pagination.data;
+			$scope.totalItems = pagination.total;
+		});
+	};
+
+	$scope.categories = Category.query();
+
+	$scope.getCategory = function(id){
+		var selected = {
+			name: "UNDEFINED"
+		};
+		angular.forEach($scope.categories, function(category){
+			if(category.id === id){
+				selected = category;
+			}
+		});
+
+		return selected;
+	};
+
+	$scope.destroy = function(transaction){
+		console.log("transaction.delete", transaction);
+		transaction.$delete(function(){
+			$scope.refresh();
+		});
+	};
+
+	$scope.refresh(0);
+
+	//Pagination
+	$scope.pageChanged = function(){
+		console.log("transactions.pagechanged", $scope.currentPage, $scope.totalItems);
+		$scope.refresh($scope.currentPage);
+	};
+	
+	$scope.$watch('currentPage', $scope.pageChanged);
+	
+	$scope.assignCategory = function(transaction, category_id){
+		console.log("transaction.assignCategory", transaction, category_id);
+
+		transaction.category_id = category_id;
+		Transaction.update({id: transaction.id}, transaction, function(){
+			$scope.refresh($scope.currentPage);
+		});
 	};
 }]);

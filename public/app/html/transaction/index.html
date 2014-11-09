@@ -2,6 +2,7 @@
 	<div class="col-xs-12">
 		<ul class="nav nav-pills" role="tablist">
 			<li><a ui-sref="transaction-create"><i class="glyphicon glyphicon-plus-sign"></i></a></li>
+			<li><a ui-sref="transaction-categorize"><i class="glyphicon glyphicon-tags"></i></a></li>
 			<li><a ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i></a></li>
 		</ul>
 	</div>
@@ -18,7 +19,6 @@
 				<th></th>
 		    </tr>
 		    <tr>
-
 				<td><input type="text" class="form-control" ng-model="transaction.description" placeholder="payment" required/></td>
 				<td>
 					<select class="form-control" ng-model="transaction.category_id">
@@ -37,7 +37,7 @@
 		    <tr ng-repeat="record in records">
 				<td>{{record.description}}</td>
 				<td>{{getCategory(record.category_id).name}}</td>
-				<td>{{record.transaction_at}}</td>
+				<td>{{record.transaction_at | date:'Y-m-d'}}</td>
 				<td>{{record.amount}}€</td>
 				<td>
 					<button ng-click="destroy(record)" class="btn btn-xs btn-danger">
@@ -47,7 +47,7 @@
 		    </tr>
 		</table>
 		</form>
-		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"  max-size="3"  boundary-links="true"></pagination><input type="number" ng-model="currentPage"/>
+		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"  max-size="3"  boundary-links="true"></pagination><!--<input type="number" ng-model="currentPage"/>-->
 	</div>
 </div>
 

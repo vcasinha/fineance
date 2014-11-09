@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-xs-12">
+		<ul class="nav nav-pills" role="tablist">
+			<li><a ui-sref="transaction-create"><i class="glyphicon glyphicon-plus-sign"></i></a></li>
+			<li><a ui-sref="transaction-categorize"><i class="glyphicon glyphicon-tags"></i></a></li>
+			<li><a ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i></a></li>
+		</ul>
+	</div>
+</div>
+<div class="row top7">
+	<div class="col-xs-10">
+		<form name="form" novalidate="">
+		<table class="table table-striped table-bordered">
+		    <tr>
+				<th>Description</th>
+				<th>Date</th>
+				<th>Amount</th>
+				<th></th>
+		    </tr>
+		    <tr ng-repeat="record in records">
+				<td>{{record.description}}</td>
+				<td>{{record.transaction_at | date:'Y-m-d'}}</td>
+				<td>{{record.amount}}€</td>
+				<td class="col-xs-2">
+					<span ng-repeat="category in categories" 
+						class="label" 
+						ng-class="{'label-default': category.id != record.category_id, 'label-success': category.id == record.category_id}"
+						ng-click="assignCategory(record, category.id)">{{category.name}}</span>
+				</td>
+		    </tr>
+		</table>
+		</form>
+		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"  max-size="3"  boundary-links="true"></pagination><!--<input type="number" ng-model="currentPage"/>-->
+	</div>
+</div>
+
+

@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-xs-12" nav-stats></div>
+</div>
+<div class="row top7">
+	<pre>{{chartData|json}}</pre>
+		<nvd3-stacked-area-chart
+	        data = "chartData"
+	        showXAxis = "true"
+	        showYAxis = "true"
+	        tooltips = "true"
+	        interactive = "true"
+	        height="300"
+	        showControls="true"
+	        showLegend="true"
+	        ></nvd3-stacked-area-chart>
+	</div>
+</div>

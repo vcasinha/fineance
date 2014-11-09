@@ -12,23 +12,33 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+	<div class="col-xs-12">
+		<nvd3-multi-bar-chart
+	        data = "chartData"
+	        showXAxis = "true"
+	        showYAxis = "true"
+	        tooltips = "true"
+	        interactive = "true"
+	        height="500"
+	        showControls="true"
+	        showLegend="true"
+	        ></nvd3-multi-bar-chart>
+	</div>
+</div>
 <div class="row top7">
 	<div class="col-xs-10">
 		<table class="table table-striped table-bordered">
 		    <tr>
 				<th>Category</th>
+				<th>Month</th>
 				<th>Transactions</th>
-				<th>Minimum</th>
-				<th>Average</th>
-				<th>Maximum</th>
 				<th>Total</th>
 		    </tr>
 		    <tr ng-repeat="record in stats">
 				<td>{{categoryByID(record.category_id).name}}</td>
+				<td>{{record.month}}</td>
 				<td>{{record.count}}</td>
-				<td>{{record.minimum}}€</td>
-				<td>{{record.average}}€</td>
-				<td>{{record.maximum}}€</td>
 				<td>{{record.total}}€</td>
 		    </tr>
 		</table>

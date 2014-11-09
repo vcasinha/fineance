@@ -2,6 +2,7 @@ var modules = [
 	'ngResource', 
 	'ui.router', 
 	'ui.bootstrap',
+	'nvd3ChartDirectives',
 	'fineance.services',
 	'fineance.directives',
 	'fineance.transaction',

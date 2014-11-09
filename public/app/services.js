@@ -45,6 +45,11 @@ function($resource){
 			method: 'GET',
 			url: '/api/categories/summary/period/:period',
 			isArray: true
+		},
+		'groups': {
+			method: 'GET',
+			url: 'api/group/summary/year/:year',
+			isArray: true,
 		}
 	};
 

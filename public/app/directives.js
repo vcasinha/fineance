@@ -11,7 +11,7 @@ app.directive('navStats', function() {
 			$scope.locations = [
 				{label: 'Index', state: 'stats'},
 				{label: 'Categories', state: 'stats-categories'},
-				{label: 'Mmm', state: 'stats-mmm'}
+				{label: 'Groups', state: 'stats-groups'}
 			];
 		}
     };

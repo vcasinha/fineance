@@ -30,6 +30,7 @@ Route::group(array('prefix' => 'api'), function()
     Route::resource('transaction', 'TransactionController');
     Route::get('stats/summary/{year?}', 'TransactionController@summaryYear');
     Route::get('categories/summary/period/{month?}', 'TransactionController@summaryCategoriesPeriod');
+    Route::get('group/summary/year/{year?}', 'TransactionController@summaryGroupYear');
     //Group routes
     Route::resource('group', 'GroupController');
     
@@ -45,6 +46,43 @@ Route::group(array('prefix' => 'api'), function()
 Route::post('auth/login', 'AuthController@login');
 Route::get('auth/logout', 'AuthController@logout');
 Route::get('auth/check', 'AuthController@check');
+
+Route::get('parse', function(){
+	DB::table('transactions')->delete();
+	$file = storage_path() . '/files/cgd.csv';
+	$data = file($file);
+	for($i = 7;$i < count($data) - 3; $i++)
+	{
+		
+		$fields = explode(";", $data[$i]);
+		
+		if($fields[3] != '')
+		{
+			$amount = "-" . $fields[3];
+		}
+		else
+		{
+			$amount = $fields[4];
+		}
+		
+		$amount = str_replace(".", "", $amount);
+		$amount = str_replace(",", ".", $amount);
+		
+		$t = [
+			'transaction_at' => date('Y-m-d', strtotime($fields[1])),
+			'description' => $fields[2],
+			'amount' => $amount
+		];
+/*
+		echo "<pre>";
+		var_dump($t);
+		die();
+*/
+		$transaction = new Transaction();
+		$transaction->fill($t);
+		$transaction->save();
+	}
+});
 
 //Application routes
 Route::get('/', function()

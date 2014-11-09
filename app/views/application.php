@@ -5,6 +5,7 @@
 		<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
 		<link rel="stylesheet" type="text/css" href="/bower_components/angular-ui/build/angular-ui.min.css">
 		<link rel="stylesheet" type="text/css" href="/app/css/style.css">
+		<link rel="stylesheet" href="/bower_components/nvd3/nv.d3.css"/>
 	</head>
 	<body ng-app="fineance">
 		<nav class="navbar navbar-default" role="navigation">
@@ -69,6 +70,9 @@
 
 		<!-- Scripts -->
 		<script src="/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- 		<script src="/bower_components/d3/d3.js"></script> -->
+		<script src="/d3.v2.min.js"></script>
+		<script src="/bower_components/nvd3/nv.d3.js"></script>
 		<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
 		<script src="/bower_components/angular/angular.min.js"></script>
 		<script src="/bower_components/angular-ui/build/angular-ui.min.js"></script>
@@ -76,6 +80,7 @@
 		<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 		<script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 		<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+		<script src="/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
 		<script src="/app/main.js"></script>
 		<script src="/app/directives.js"></script>
 		<script src="/app/transaction.js"></script>

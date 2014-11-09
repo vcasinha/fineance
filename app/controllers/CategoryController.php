@@ -14,7 +14,7 @@
 		public function index()
 		{
 			$order_by = Input::get('order_by', 'name');
-			$order_direction = Input::get('order_direction', 'desc');
+			$order_direction = Input::get('order_direction', 'asc');
 			$offset = Input::get('offset', 0);
 			$limit = Input::get('limit', 30);
 			
@@ -48,8 +48,8 @@
 		public function update($id)
 		{
 			$rules = [
-				'name' => 'min:5',
-				'description' => 'min:5'
+				'name' => 'min:3',
+				'description' => 'min:3'
 			];
 			
 			$input = Input::json();
@@ -77,7 +77,7 @@
 		{
 			$rules = [
 				'name' => 'required',
-				'description' => 'min:5',
+				'description' => 'min:3',
 			];
 			$input = Input::json();
 			
