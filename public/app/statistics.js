@@ -148,6 +148,9 @@ function getRandomColor() {
 }
 
 function initSerie(name, id){
+	if(name == null){
+		name = "Ungroupped";
+	}
 	console.log("initSerie", name, id);
 	return {
 		key: name,
