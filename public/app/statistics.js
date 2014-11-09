@@ -22,11 +22,19 @@ function ($stateProvider,   $urlRouterProvider) {
 
 app.controller('StatsIndexController', ['$scope', 'Stats',
 function ($scope, Stats) {
-	$scope.stats = Stats.index({period: '2014-11'},function(data){
+	$scope.showList = false;
+	$scope.showDebug = false;
+	$scope.showChart = true;
+	
+	$scope.toggle = function(field){
+		$scope[field] = !$scope[field];
+	}
+	
+	$scope.stats = Stats.index({period: '2014'},function(data){
 		var values = [];
 		var c = 0;
 		angular.forEach(data, function(record){
-			values[c] = [record.month, record.total];
+			values[c] = [Number(record.month), Number(record.total)];
 			c++;
 		});
 		
@@ -57,6 +65,14 @@ function ($scope, Stats) {
 
 app.controller('StatsCategoriesController', ['$scope', '$filter', 'Stats', 'Category',
 function ($scope, $filter, Stats, Category) {
+	$scope.showList = false;
+	$scope.showDebug = false;
+	$scope.showChart = true;
+	
+	$scope.toggle = function(field){
+		$scope[field] = !$scope[field];
+	}
+	
 	$scope.toTimestamp = function(d){
 		var dd = new Date.parseDate('Y-m-d H:i:s', d);
 		console.log("toTimestamp", d, dd);
@@ -153,31 +169,18 @@ function initSerie(name, id){
 	};
 }
 
-app.controller('StatsGroupsController', ['$scope', 'Stats', 'Group',
+app.controller('StatsGroupsController', ['$scope', 'Stats',
 function ($scope, Stats, Group) {
 	var series = {};
 	var charts = [];
-	var groups = Group.query();
-	
-	function find_group(id){
-		var group = "Unknown Group";
-		
-		angular.forEach(groups, function(g){
-			if(g.id == id){
-				group = g;
-			}
-		});
-		
-		return group;	
-	}
 	
 	$scope.chartData = [];
 	$scope.stats = Stats.groups({year: '2014-11'},function(data){
 		angular.forEach(data, function(record){
-			var group = Number(record.group);
+			var group = record.group;
 			serie = series[group];
 			if(!serie){
-				series[group] = initSerie(find_group(record.group).name, record.group);
+				series[group] = initSerie(record.group, record.group);
 			}
 			
 			serie = series[group];

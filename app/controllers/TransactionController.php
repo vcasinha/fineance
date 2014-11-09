@@ -126,7 +126,7 @@
 			$summary = Transaction::select(array(
 			        DB::raw('MONTH(`transaction_at`) as `month`'),
 			        DB::raw('COUNT(*) as `count`'),
-			        DB::raw('SUM(amount) as `total`')
+			        DB::raw('SUM(ABS(amount)) as `total`')
 			    ))
 			    //->where('created_at', '>', $date)
 			    ->groupBy('month')
@@ -160,7 +160,7 @@
 				->leftJoin('groups', 'groups.id', '=', 'group_categories.group_id')
 				->select(array(
 			        DB::raw('MONTH(`transaction_at`) as `month`'),
-			        DB::raw('groups.id as `group`'),
+			        DB::raw('groups.name as `group`'),
 			        DB::raw('SUM(ABS(amount)) as `total`')
 			    ))
 			    ->whereRaw("YEAR(transaction_at) >= '" . $year . "'")

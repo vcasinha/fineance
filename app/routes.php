@@ -48,6 +48,7 @@ Route::get('auth/logout', 'AuthController@logout');
 Route::get('auth/check', 'AuthController@check');
 
 Route::get('parse', function(){
+	die("DISABLED");
 	DB::table('transactions')->delete();
 	$file = storage_path() . '/files/cgd.csv';
 	$data = file($file);

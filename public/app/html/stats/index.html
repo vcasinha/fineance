@@ -1,27 +1,41 @@
 <div class="row">
 	<div class="col-xs-12" nav-stats></div>
 </div>
+<div class="row">
+	<ul class="col-xs-12 nav nav-pills">
+		<li ng-class="{active: showList}"><a ng-click="toggle('showList')"><i class="glyphicon glyphicon-list"></i></a></li>
+		<li ng-class="{active: showChart}"><a ng-click="toggle('showChart')"><i class="glyphicon glyphicon-signal"></i></a></li>
+		<li ng-class="{active: showDebug}"><a ng-click="toggle('showDebug')"><i class="glyphicon glyphicon-cog"></i></a></li>
+	</ul>
+</div>
 <div class="row top7">
-	<div class="col-xs-10">
-		<pre>{{stats}}</pre>
-<nvd3-line-chart
-        data="chartData"
-        showXAxis="true"
-        showYAxis="true"
-        tooltips="true"
-        interactive="true">
-    </nvd3-line-chart>
-		<table class="table table-striped table-bordered">
+	<div class="col-xs-12">
+		<nvd3-line-chart
+	        data="chartData"
+	        showXAxis="true"
+	        showYAxis="true"
+	        tooltips="true"
+	        interactive="true"
+	        height="300" ng-show="showChart">
+		</nvd3-line-chart>
+	</div>
+</div>
+<div class="row top7">
+	<div class="col-xs-6">
+		<table class="table table-striped table-bordered" ng-show="showList">
 		    <tr>
 				<th>Month</th>
-				<th>Transactions</th>
-				<th>Total</th>
+				<th align="right">Transactions</th>
+				<th align="right">Total</th>
 		    </tr>
 		    <tr ng-repeat="record in stats">
 				<td>{{months[record.month]}}</td>
-				<td>{{record.count}}</td>
-				<td>{{record.total}}€</td>
+				<td align="right">{{record.count}}</td>
+				<td align="right">{{record.total|number}}€</td>
 		    </tr>
 		</table>
+	</div>
+	<div class="col-xs-6">
+		<pre ng-show="showDebug">{{chartData|json}}</pre>
 	</div>
 </div>

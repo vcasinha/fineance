@@ -27,10 +27,11 @@
 						<li><a ui-sref="transaction">Transactions</a></li>
 				        <li><a ui-sref="category">Categories</a></li>
 				        <li><a ui-sref="group">Groups</a></li>
+				        <li><a ui-sref="stats">Stats</a></li>
 				        <li class="dropdown">
-				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistics <span class="caret"></span></a>
+				        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Misc <span class="caret"></span></a>
 							<ul class="dropdown-menu" role="menu">
-				            	<li><a ui-sref="stats">Index</a></li>
+				            	<li><a ui-sref="a">Index</a></li>
 					            <li class="divider"></li>
 					            <li><a href="#">Separated link</a></li>
 					            <li class="divider"></li>
