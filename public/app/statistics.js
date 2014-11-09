@@ -57,12 +57,19 @@ function ($scope, Stats) {
 
 app.controller('StatsCategoriesController', ['$scope', '$filter', 'Stats', 'Category',
 function ($scope, $filter, Stats, Category) {
+	$scope.toTimestamp = function(d){
+		var dd = new Date.parseDate('Y-m-d H:i:s', d);
+		console.log("toTimestamp", d, dd);
+		return dd;
+	};
+	
 	$scope.categories = Category.query();
-	$scope.period = '2014-11';
-	var charts = [];
-	var series = {};
+	$scope.period = '2014-11-01';
+	
 	function refresh(){
-		var period = $scope.date = $filter('date')($scope.period,'yyyy-MM'); 
+		var charts = [];
+		var series = {};
+		var period = $scope.date = $filter('date')($scope.period,'yyyy'); 
 		$scope.stats = Stats.categories({period: period}, function(data){
 			angular.forEach(data, function(record){
 				var category = Number(record.category_id);
@@ -78,14 +85,15 @@ function ($scope, $filter, Stats, Category) {
 			angular.forEach(series, function(serie){
 				charts[charts.length] = serie;
 			});
+			
 			$scope.chartData = charts;
 			
 		});
 	};
 	
 	$scope.datepickerOptions = {
-	    datepickerMode:"'month'",
-	    minMode:"month",
+	    datepickerMode:"'year'",
+	    minMode:"year",
 	    minDate:"minDate",
 	    showWeeks:"false",
 	 };
