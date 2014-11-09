@@ -80,13 +80,13 @@ function ($scope, $filter, Stats, Category) {
 	};
 	
 	$scope.categories = Category.query();
-	$scope.period = '2014-11-01';
+	$scope.period = 2014;
 	
 	function refresh(){
 		var charts = [];
 		var series = {};
-		var period = $scope.date = $filter('date')($scope.period,'yyyy'); 
-		$scope.stats = Stats.categories({period: period}, function(data){
+
+		$scope.stats = Stats.categories({period: $scope.period}, function(data){
 			angular.forEach(data, function(record){
 				var category = Number(record.category_id);
 				var serie = series[category];

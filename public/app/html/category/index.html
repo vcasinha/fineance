@@ -1,20 +1,40 @@
-<div class="row">
-	<div class="col-xs-12">
-		<ul class="nav nav-pills" role="tablist">
-			<li><a ui-sref="category-create"><i class="glyphicon glyphicon-plus-sign"></i></a></li>
-			<li><a ng-click="refresh()"><i class="glyphicon glyphicon-refresh"></i></a></li>
-		</ul>
-	</div>
-</div>
 <div class="row top7">
 	<div class="col-xs-10">
+		<form name="form" novalidate="">
 		<table class="table table-striped table-bordered">
 		    <tr>
-				<th>Name</th>
-				<th>Description</th>
+				<th ng-click="toggleOrder('name')">
+					<span ng-show="order.name == 'ASC'">
+						<i class="glyphicon glyphicon-arrow-up"></i>
+					</span>
+					<span ng-show="order.name == 'DESC'">
+						<i class="glyphicon glyphicon-arrow-down"></i>
+					</span>
+					<span>Name</span>
+				</th>
+				<th ng-click="toggleOrder('description')">
+					<span ng-show="order.description == 'ASC'">
+						<i class="glyphicon glyphicon-arrow-up"></i>
+					</span>
+					<span ng-show="order.description == 'DESC'">
+						<i class="glyphicon glyphicon-arrow-down"></i>
+					</span>
+					<span>Description</span>
+				</th>
 				<th></th>
 		    </tr>
-		    <tr ng-repeat="record in records">
+		    <tr>
+			    <td>
+				    <input type="text" pattern=".{3,}" class="form-control" ng-model="record.name" placeholder="House mortage" required/>
+			    </td>
+			    <td>
+				    <input type="text" class="form-control" ng-model="record.description" placeholder="payment"/>
+			    </td>
+			    <td>
+				    <button ng-click="create(record)" class="btn btn-sm btn-success" ng-disabled="form.$invalid"><i class="glyphicon glyphicon-plus-sign"></i></button>
+			    </td>
+		    </tr>
+		    <tr ng-repeat="record in table.records">
 				<td>{{record.name}}</td>
 				<td>{{record.description}}</td>
 				<td>
@@ -27,5 +47,7 @@
 				</td>
 		    </tr>
 		</table>
+		</form>
+		<pagination total-items="table.itemCount" ng-model="table.page" ng-change="tableRefresh()"  max-size="3"  boundary-links="true"></pagination>
 	</div>
 </div>

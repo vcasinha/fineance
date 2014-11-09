@@ -13,6 +13,9 @@
 		*/
 		public function index()
 		{
+			$records = $this->applyInputModifiers(Category::select('*'))->paginate(7);
+			return $records;
+			
 			$order_by = Input::get('order_by', 'name');
 			$order_direction = Input::get('order_direction', 'asc');
 			$offset = Input::get('offset', 0);

@@ -11,7 +11,8 @@ app.factory('Transaction', ['$resource', function($resource) {
 app.factory('Category', ['$resource', function($resource) {
 	return $resource('/api/category/:id', {id:'@id'},
     {
-        'update': { method:'PUT' }
+        'update': {method: 'PUT'},
+        'query':  {method: 'GET'}
     });
 }]);
 

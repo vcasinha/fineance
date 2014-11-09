@@ -4,6 +4,7 @@ var modules = [
 	'ui.bootstrap',
 	'nvd3ChartDirectives',
 	'fineance.services',
+	'fineance.extensions',
 	'fineance.directives',
 	'fineance.transaction',
 	'fineance.category',

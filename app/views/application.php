@@ -86,6 +86,7 @@
 		<script src="/app/directives.js"></script>
 		<script src="/app/transaction.js"></script>
 		<script src="/app/category.js"></script>
+		<script src="/app/extensions.js"></script>
 		<script src="/app/group.js"></script>
 		<script src="/app/services.js"></script>
 		<script src="/app/statistics.js"></script>

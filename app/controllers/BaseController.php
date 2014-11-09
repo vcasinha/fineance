@@ -23,12 +23,20 @@ class BaseController extends Controller {
 	    {
 			$object->where($whereField, $whereValue);    
 	    }
-        $order_by = Input::get('order_by', 'transaction_at');
-        $order_direction = Input::get('order_direction', 'desc');
+	    
+	    $order_by = Input::get('order', "{}");
+		$order_by = json_decode($order_by, false);
+	    foreach($order_by as $field => $direction)
+	    {
+		    $object->orderBy($field, $direction);
+	    }
+	    
         $offset = Input::get('offset', 0);
         $limit = Input::get('limit', 10);
+
+        $object->skip($offset)->take($limit);
+        
         Paginator::setCurrentPage($offset/$limit);
-        $object->orderBy($order_by, $order_direction)->skip($offset)->take($limit);
 
         return $object;
     }

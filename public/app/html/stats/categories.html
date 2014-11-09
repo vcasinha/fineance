@@ -4,10 +4,7 @@
 		<div class="form-group">
 			<label>Transaction Month</label>
 	        <p class="input-group">
-	            <input type="text" class="form-control" datepicker-options="{{datepickerOptions}}" datepicker-popup="yyyy" ng-model="period" is-open="opened" ng-click="openCalendar($event)"/>
-	            <span class="input-group-addon" ng-click="openCalendar($event)">
-					<i class="glyphicon glyphicon-calendar"></i>
-				</span>
+	            <input type="number" class="form-control" ng-model="period" maxlength="4"/>
 	        </p>
 		</div>
 	</div>
@@ -21,7 +18,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-12" ng-show="showChart">
-		<nvd3-multi-bar-chart
+		<nvd3-stacked-area-chart
 	        data = "chartData"
 	        showXAxis = "true"
 	        showYAxis = "true"
@@ -30,7 +27,7 @@
 	        height="500"
 	        showControls="true"
 	        showLegend="true"
-	        ></nvd3-multi-bar-chart>
+	        ></nvd3-stacked-area-chart>
 	</div>
 </div>
 <div class="row top7">
