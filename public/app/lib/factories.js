@@ -116,23 +116,23 @@ function($resource) {
 
     return {
         create: function(record){
-            console.log("category.save", record);
+            console.log("group.save", record);
             return resource.save(record).$promise;
         },
         destroy: function(record){
-            console.log("category.destroy", record);
+            console.log("group.destroy", record);
             return resource.delete(record).$promise;
         },
         update: function(record){
-            console.log("category.update", record);
+            console.log("group.update", record);
             return resource.update(record).$promise;
         },
         index: function(params){
-            console.log("category.index", params);
+            console.log("group.index", params);
             return resource.index(params).$promise;
         },
         query: function(params){
-            console.log("category.query", params);
+            console.log("group.query", params);
             return resource.query(params).$promise;
         }
     };
@@ -245,7 +245,7 @@ function(Stats) {
         var charts = [];
         var series = {};
 
-        console.log("stats.index", data, series_params);
+        //console.log("stats.index", data, series_params);
 
         angular.forEach(series_params, function(param){
             console.log("preparemutipleserieschart.seriesInit", param.label, param.index);
@@ -256,6 +256,9 @@ function(Stats) {
             console.log("preparemutipleserieschart", dimension_field, record[index_field], record[value_field], record);
             var dimension = Number(record[dimension_field]);
             var serie = series[dimension];
+            if(!serie){
+	            console.error("statscharts.recordMissing", dimension_field, record[dimension_field]);
+            }
             serie.values[Number(record[index_field] - 1)] = [Number(record[index_field]), Number(record[value_field])];
         });
         

@@ -37,24 +37,25 @@ function ($scope, Group) {
 		sortable: ['name', 'description'],
 	};
 */
-	$scope.refresh = function(){
-		$scope.records = Group.index();
+	var refresh = function(){
+		Group.index().then(
+			function(data){
+				$scope.records = data;
+			},
+			function(){
+				
+			});
 	};
 
 	$scope.destroy = function(record){
 		console.log("category.destroy", record);
-
-		record.$delete()
-			.then(
-			function(){
-				$scope.refresh();
-			},
-			function(){
+		Group.destroy(record)
+			.then(refresh, function(){
 				console.error(arguments);
 			});
 	};
 
-	$scope.refresh();
+	refresh();
 }]);
 
 app.controller('GroupCreateController', ['$scope', '$state', 'Group',
@@ -62,13 +63,12 @@ function ($scope, $state, Group) {
 	$scope.record = {};
 	$scope.create = function(record){
 		console.log("group.create", record);
-
-		var t = new Group(record);
-		t.$save()
-			.then(function(){
+		Group.create(record).then(
+			function(){
 				$state.go('group');
-			}, function(){
-				alert('failed');
+			},
+			function(e){
+				console.error("GroupeCreateController.save", e.data.error);
 			});
 	};
 }]);

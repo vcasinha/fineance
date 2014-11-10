@@ -53,6 +53,7 @@ function ($scope, scopeToggle, StatsCharts, Stats, Category) {
                 var series_params = [];
 
                 angular.forEach(categories, function(category){
+	                console.log("stats.controller", category.id);
                     series_params.push({
                         index: category.id,
                         label: category.name
