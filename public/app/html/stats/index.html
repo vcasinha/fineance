@@ -11,7 +11,7 @@
 <div class="row top7">
 	<div class="col-xs-12">
 		<nvd3-line-chart
-	        data="chartData"
+	        data="chart.series"
 	        showXAxis="true"
 	        showYAxis="true"
 	        tooltips="true"
@@ -28,8 +28,8 @@
 				<th align="right">Transactions</th>
 				<th align="right">Total</th>
 		    </tr>
-		    <tr ng-repeat="record in stats">
-				<td>{{months[record.month]}}</td>
+		    <tr ng-repeat="record in chart.data">
+				<td>{{record.month}}</td>
 				<td align="right">{{record.count}}</td>
 				<td align="right">{{record.total|number}}€</td>
 		    </tr>

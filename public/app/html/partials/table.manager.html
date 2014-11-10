@@ -25,14 +25,13 @@
 		    <td ng-repeat="field in table.fields">
 			    <input 
 			    	type="{{field.type}}" 
-			    	pattern=".{3,}" 
+			    	pattern="{{field.pattern}}" 
 			    	class="form-control" 
 			    	ng-model="table.record[field.name]" 
 			    	placeholder="{{field.placeholder}}" 
 			    	required
 			    	ng-show="field.type != 'related'"
 			    />
-			    
 				<select ng-show="field.type == 'related'" class="form-control" ng-model="table.record[field.name]">
 					<option 
 						ng-repeat="related in field.related.records" 

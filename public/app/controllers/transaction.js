@@ -27,6 +27,15 @@ function ($stateProvider,   $urlRouterProvider) {
 
 app.controller('TransactionIndexController', ['$scope', '$state', 'Transaction', 'Category',
 function ($scope, $state, Transaction, Category) {
+	var records = [];
+	
+	Category.index({limit:-1})
+		.then(function(data){
+			angular.forEach(data, function(r){
+				records.push(r);
+			})
+		});
+
 	$scope.table_params = {
 		model: Transaction,
 		max_pages: 5,
@@ -34,7 +43,7 @@ function ($scope, $state, Transaction, Category) {
 			{ name:"transaction_at", label:"Date of transaction", type: 'date', placeholder: '2014-01-01' },
 			{ name:"description", label:"Description", type: 'text', placeholder: 'Description' },
 			{ name:"category_id", label:"Category", type: 'related', 
-				related: { index: 'id', label: 'name', records: Category.index({limit:-1}) }},
+				related: { index: 'id', label: 'name', records: records }},
 			{ name:"amount", label:"Amount", type: 'number', placeholder: '12.3' },
 
 		],

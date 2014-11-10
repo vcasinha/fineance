@@ -19,7 +19,7 @@
 <div class="row">
 	<div class="col-xs-12" ng-show="showChart">
 		<nvd3-stacked-area-chart
-	        data = "chartData"
+	        data = "chart.series"
 	        showXAxis = "true"
 	        showYAxis = "true"
 	        tooltips = "true"
@@ -48,7 +48,7 @@
 				<th>November</th>
 				<th>December</th>
 		    </tr>
-		    <tr ng-repeat="serie in chartData">
+		    <tr ng-repeat="serie in chart.series">
 				<td>{{serie.key}}</td>
 				<td ng-repeat="v in serie.values">{{v[1]|number}}€</td>
 		    </tr>

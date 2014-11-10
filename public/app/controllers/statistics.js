@@ -20,184 +20,95 @@ function ($stateProvider,   $urlRouterProvider) {
 		});
 }]);
 
-app.controller('StatsIndexController', ['$scope', 'Stats',
-function ($scope, Stats) {
-	$scope.showList = false;
-	$scope.showDebug = false;
-	$scope.showChart = true;
-	
-	$scope.toggle = function(field){
-		$scope[field] = !$scope[field];
-	}
-	
-	$scope.stats = Stats.index({period: '2014'},function(data){
-		var values = [];
-		var c = 0;
-		angular.forEach(data, function(record){
-			values[c] = [Number(record.month), Number(record.total)];
-			c++;
-		});
-		
-		var graph = {
-			key: "Transactions",
-			values: values
-		};
-		
-		$scope.chartData = [graph];
-	});
-	
-	$scope.months = [
-		'',
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December'
-	];
-}]);
-
-app.controller('StatsCategoriesController', ['$scope', '$filter', 'Stats', 'Category',
-function ($scope, $filter, Stats, Category) {
-	$scope.showList = false;
-	$scope.showDebug = false;
-	$scope.showChart = true;
-	
-	$scope.toggle = function(field){
-		$scope[field] = !$scope[field];
-	}
-	
-	$scope.toTimestamp = function(d){
-		var dd = new Date.parseDate('Y-m-d H:i:s', d);
-		console.log("toTimestamp", d, dd);
-		return dd;
-	};
-	
-	$scope.categories = Category.query();
-	$scope.period = 2014;
-	
-	function refresh(){
-		var charts = [];
-		var series = {};
-
-		$scope.stats = Stats.categories({period: $scope.period}, function(data){
-			angular.forEach(data, function(record){
-				var category = Number(record.category_id);
-				var serie = series[category];
-				if(!serie){
-					series[category] = initSerie($scope.categoryByID(category).name, category);
-				}
-				
-				serie = series[category];
-				serie.values[Number(record.month - 1)] = [Number(record.month), Number(record.total)];
-			});
-			
-			angular.forEach(series, function(serie){
-				charts[charts.length] = serie;
-			});
-			
-			$scope.chartData = charts;
-			
-		});
-	};
-	
-	$scope.datepickerOptions = {
-	    datepickerMode:"'year'",
-	    minMode:"year",
-	    minDate:"minDate",
-	    showWeeks:"false",
-	 };
-	
-	$scope.opened = false;
-    $scope.openCalendar = function ($event) {
-        $event.preventDefault();
-        $event.stopPropagation();
-        $scope.opened = !$scope.opened;
+app.controller('StatsIndexController', ['$scope', 'scopeToggle', 'StatsCharts',
+function ($scope, scopeToggle, StatsCharts) {
+    var flags = {
+        showList: false,
+        showDebug: false,
+        showChart: true
     };
-    
-	$scope.$watch('period', function(newValue, oldValue) {
-		refresh();
-	});
+
+    scopeToggle($scope, flags);
 	
-	$scope.categoryByID = function(category_id){
-		var value = {};
-		angular.forEach($scope.categories, function(category){
-			if(category.id == category_id){
-				value = category;
-				return false;
-			}
-		});
-		
-		return value;
-	}
+    StatsCharts.index({period: '2014'}, function(chart){
+        $scope.chart = chart;
+    });
 }]);
 
-function getRandomColor() {
-    var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++ ) {
-        color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-}
+app.controller('StatsCategoriesController', ['$scope', 'scopeToggle', 'StatsCharts','Stats', 'Category', 
+function ($scope, scopeToggle, StatsCharts, Stats, Category) {
+    $scope.period = 2014;
 
-function initSerie(name, id){
-	if(name == null){
-		name = "Ungroupped";
-	}
-	console.log("initSerie", name, id);
-	return {
-		key: name,
-		//color: getRandomColor(),
-		values: [
-			[1, 0],
-			[2, 0],
-			[3, 0],
-			[4, 0],
-			[5, 0],
-			[6, 0],
-			[7, 0],
-			[8, 0],
-			[9, 0],
-			[10, 0],
-			[11, 0],
-			[12, 0],
-		]
-	};
-}
+    var flags = {
+        showList: false,
+        showDebug: false,
+        showChart: true
+    };
+
+    scopeToggle($scope, flags);
+    
+    function refresh(){
+        Category.index()
+            .then(function(categories){
+                var series_params = [];
+
+                angular.forEach(categories, function(category){
+                    series_params.push({
+                        index: category.id,
+                        label: category.name
+                    });
+                });
+                StatsCharts.categories({period: $scope.period}, series_params, function(chart){
+                    $scope.chart = chart;
+                });
+            });
+    }
+
+    $scope.$watch('period', refresh);
+}]);
 
 app.controller('StatsGroupsController', ['$scope', 'Stats',
 function ($scope, Stats, Group) {
 	var series = {};
 	var charts = [];
 	
-	$scope.chartData = [];
-	$scope.stats = Stats.groups({year: '2014-11'},function(data){
-		angular.forEach(data, function(record){
-			var group = record.group;
-			serie = series[group];
-			if(!serie){
-				series[group] = initSerie(record.group, record.group);
-			}
-			
-			serie = series[group];
-			serie.values[Number(record.month - 1)] = [Number(record.month), Number(record.total)];
+    var prepareChart = function(data){
+        $scope.stats = data;
+        angular.forEach(data, function(record){
+            var group = record.group;
+            serie = series[group];
+            if(!serie){
+                series[group] = initSerie(record.group, record.group);
+            }
+            
+            serie = series[group];
+            serie.values[Number(record.month - 1)] = [Number(record.month), Number(record.total)];
+        });
 
-		});
-		
-		angular.forEach(series, function(serie){
-			console.log(serie);
-			charts[charts.length] = serie;
-		});
-		$scope.chartData = charts;
-	});
+        angular.forEach(series, function(serie){
+            console.log(serie);
+            charts[charts.length] = serie;
+        });
+        $scope.chartData = charts;
+    };
+
+	$scope.chartData = [];
+	Stats.groups({year: '2014-11'}).then(prepareChart);
 }]);
+
+function initSerie(name){
+    if(name == null){
+        name = "Ungroupped";
+    }
+    
+    console.log("initSerie", name);
+    
+    return {
+        key: name,
+        //color: getRandomColor(),
+        values: [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0], [9, 0], [10, 0], [11, 0], [12, 0]]
+    };
+}
 
 /*
 	$scope.months = [

@@ -33,20 +33,21 @@ app.controller('tableController', ['$scope', function($scope){
 	
 	//Destroy record
 	$scope.table.destroy = function(record){
-		console.log("category.destroy", record);
-		$scope.table.model.delete(record, function(){
-				$scope.table.refresh();
-			}, 
-			function(){
-				console.error(arguments);
-			});
+		console.log("table.record.destroy", record);
+		$scope.table.model.destroy(record)
+			.then(
+				function(){
+					$scope.table.refresh();
+				}, 
+				function(){
+					console.error(arguments);
+				});
 	};
 	
 	//Create record
 	$scope.table.create = function(record){
-		console.log("category.create", record);
-		var t = new $scope.table.model(record);
-		t.$save()
+		console.log("table.record.create", record);
+		$scope.table.model.create(record)
 			.then(function(){
 				$scope.table.record = {};
 				$scope.table.refresh();
@@ -63,21 +64,22 @@ app.controller('tableController', ['$scope', function($scope){
 			order: $scope.table.order
 		};
 		
-		//console.log("table.refresh", $scope.table.collection_params, $scope);
+		console.log("table.refresh", $scope.table.collection_params);
 		
-		var query = $scope.table.model.query($scope.table.collection_params);
-		query.$promise.then(
-			function(response){
-				//console.log("query.response", response);
-				$scope.table.records = response.data;
-				$scope.table.itemCount = response.total;
-			}, 
-			function(res){
-				console.error(res.data);
-			});
+		var query = $scope.table.model.query($scope.table.collection_params)
+			.then(
+				function(response){
+					//console.log("query.response", response);
+					$scope.table.records = response.data;
+					$scope.table.itemCount = response.total;
+				}, 
+				function(res){
+					console.error(res.data);
+				});
 	};
 	
 	$scope.table.getRecordValue = function(record, field){
+		//console.log("getRecordValue", record, field);
 		var collectionFind = function(collection, field, value){
 			var needle;
 			angular.forEach(collection, function(record){
@@ -87,7 +89,6 @@ app.controller('tableController', ['$scope', function($scope){
 			});
 			return needle;
 		}
-		
 		
 		if(field.type == 'related'){
 			var item = collectionFind(field.related.records, field.related.index, record[field.name]);
