@@ -16,14 +16,6 @@
 			$records = $this->applyInputModifiers(Category::select('*'));
 			
 			return $records;
-			
-			$order_by = Input::get('order_by', 'name');
-			$order_direction = Input::get('order_direction', 'asc');
-			$offset = Input::get('offset', 0);
-			$limit = Input::get('limit', 30);
-			
-			$records = Category::orderBy($order_by, $order_direction)->skip($offset)->take($limit)->get();
-			return $records;
 		}
 		
 		/*

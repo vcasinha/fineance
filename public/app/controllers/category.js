@@ -26,10 +26,6 @@ function ($scope, Category) {
 		fields: [
 			{ name:"name", label:"Name", type: 'text', placeholder: 'Fixed Income' },
 			{ name:"description", label:"Description", type: 'text', placeholder: 'Fixed recurring income' },
-/*
-			{ name:"category", label:"Category", type: 'related', 
-				related: { index: 'id', records: Category.index(), label: 'name' }}
-*/
 		],
 		order: {
 			'name':'ASC'

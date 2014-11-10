@@ -5,6 +5,10 @@
 		*/
 		public function index($id)
 		{
+			$records = $this->applyInputModifiers(GroupCategory::where('group_id', $id));
+			
+			return $records;
+			
 			$order_by = Input::get('order_by', 'id');
 			$order_direction = Input::get('order_direction', 'desc');
 			$offset = Input::get('offset', 0);
