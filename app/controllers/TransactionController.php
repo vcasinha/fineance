@@ -15,7 +15,6 @@
 		*/
 		public function index()
 		{
-			throw new Exception("failed");
 			$records = $this->applyInputModifiers(Transaction::select('*'));
 			return $records;
 		}
