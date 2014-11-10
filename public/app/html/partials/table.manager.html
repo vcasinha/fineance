@@ -1,0 +1,57 @@
+<div class="col-xs-10">
+	<pagination total-items="table.itemCount" 
+		ng-model="table.page" 
+		ng-change="tableRefresh()" 
+		max-size="table.max_pages"
+		class="pagination-sm"
+		boundary-links="true"
+		rotate="true"></pagination>
+	<form name="form" novalidate="">
+	<table class="table table-striped table-condensed table-borderless">
+	    <tr>
+			<th 
+				ng-repeat="field in table.fields"
+				ng-click="table.toggleOrder(field.name)">
+				<span ng-show="table.getOrder(field.name) == 'ASC'">
+					<i class="glyphicon glyphicon-arrow-up"></i>
+				</span>
+				<span ng-show="table.getOrder(field.name) == 'DESC'">
+					<i class="glyphicon glyphicon-arrow-down"></i>
+				</span>
+				<span>{{field.label}}</span>
+			</th>
+	    </tr>
+	    <tr>
+		    <td ng-repeat="field in table.fields">
+			    <input 
+			    	type="{{field.type}}" 
+			    	pattern=".{3,}" 
+			    	class="form-control" 
+			    	ng-model="table.record[field.name]" 
+			    	placeholder="{{field.placeholder}}" 
+			    	required
+			    	ng-show="field.type != 'related'"
+			    />
+			    
+				<select ng-show="field.type == 'related'" class="form-control" ng-model="table.record[field.name]">
+					<option 
+						ng-repeat="related in field.related.records" 
+						value="{{related[field.related.index]}}">{{related[field.related.label]}}</option>
+				</select>
+			    
+		    </td>
+		    <td>
+			    <button ng-click="table.create(table.record)" class="btn btn-sm btn-success" ng-disabled="form.$invalid"><i class="glyphicon glyphicon-plus"></i></button>
+		    </td>
+	    </tr>
+	    <tr ng-repeat="record in table.records">
+			<td ng-repeat="field in table.fields">{{table.getRecordValue(record, field)}}</td>
+			<td>
+				<a ng-click="table.destroy(record)" class="btn btn-xs btn-danger">
+					<i class="glyphicon glyphicon-trash"></i>
+				</a>
+			</td>
+	    </tr>
+	</table>
+	</form>
+</div>

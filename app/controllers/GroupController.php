@@ -5,12 +5,8 @@
 		*/
 		public function index()
 		{
-			$order_by = Input::get('order_by', 'name');
-			$order_direction = Input::get('order_direction', 'desc');
-			$offset = Input::get('offset', 0);
-			$limit = Input::get('limit', 30);
+			$records = $this->applyInputModifiers(Group::select('*'));
 			
-			$records = Group::orderBy($order_by, $order_direction)->skip($offset)->take($limit)->get();
 			return $records;
 		}
 		

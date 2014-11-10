@@ -7,6 +7,8 @@
 		</ul>
 	</div>
 </div>
+<div class="row top" model="model" params="table_params" table-manager></div>
+<!--
 <div class="row top7">
 	<div class="col-xs-10">
 		<form name="form" novalidate="">
@@ -36,7 +38,7 @@
 		    </tr>
 		    <tr ng-repeat="record in records">
 				<td>{{record.description}}</td>
-				<td>{{getCategory(record.category_id).name}}</td>
+				<td>{{getCategory(record.category_id).name}}{{record.category_id}}</td>
 				<td>{{record.transaction_at | date:'Y-m-d'}}</td>
 				<td>{{record.amount}}€</td>
 				<td>
@@ -47,8 +49,9 @@
 		    </tr>
 		</table>
 		</form>
-		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"  max-size="3"  boundary-links="true"></pagination><!--<input type="number" ng-model="currentPage"/>-->
+		<pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"  max-size="3"  boundary-links="true"></pagination>
 	</div>
 </div>
+-->
 
 

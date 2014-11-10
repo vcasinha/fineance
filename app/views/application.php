@@ -83,12 +83,12 @@
 		<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 		<script src="/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
 		<script src="/app/main.js"></script>
-		<script src="/app/directives.js"></script>
-		<script src="/app/transaction.js"></script>
-		<script src="/app/category.js"></script>
-		<script src="/app/extensions.js"></script>
-		<script src="/app/group.js"></script>
-		<script src="/app/services.js"></script>
-		<script src="/app/statistics.js"></script>
+		<script src="/app/lib/services.js"></script>
+		<script src="/app/lib/factories.js"></script>
+		<script src="/app/lib/directives.js"></script>
+		<script src="/app/controllers/transaction.js"></script>
+		<script src="/app/controllers/category.js"></script>
+		<script src="/app/controllers/group.js"></script>
+		<script src="/app/controllers/statistics.js"></script>
 	</body>
 </html>

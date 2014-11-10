@@ -15,9 +15,8 @@
 		*/
 		public function index()
 		{
-			$transactions = $this->applyInputModifiers(Transaction::select('*'))->paginate(7);
-			
-			return $transactions;
+			$records = $this->applyInputModifiers(Transaction::select('*'));
+			return $records;
 		}
 
 		/*

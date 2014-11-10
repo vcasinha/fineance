@@ -31,14 +31,31 @@ class BaseController extends Controller {
 		    $object->orderBy($field, $direction);
 	    }
 	    
-        $offset = Input::get('offset', 0);
-        $limit = Input::get('limit', 10);
-
-        $object->skip($offset)->take($limit);
+        $limit = Input::get('limit', 0);
+		$offset = Input::get('offset', 0);
+		
+		if($offset)
+		{
+			$object->skip($offset);
+		}
+		
+        $object->take($limit);
         
-        Paginator::setCurrentPage($offset/$limit);
+        
+        $records = [];
+		if(Input::get('paginate'))
+		{
+			$limit = Input::get('limit', 10);
+			Paginator::setCurrentPage($offset/$limit);
+			$records = $object->paginate($limit);
+		}
+		else
+		{
+			$records = $object->get();
+		}
+        
 
-        return $object;
+        return $records;
     }
 
 }

@@ -13,7 +13,8 @@
 		*/
 		public function index()
 		{
-			$records = $this->applyInputModifiers(Category::select('*'))->paginate(7);
+			$records = $this->applyInputModifiers(Category::select('*'));
+			
 			return $records;
 			
 			$order_by = Input::get('order_by', 'name');
