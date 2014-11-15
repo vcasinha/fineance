@@ -6,7 +6,6 @@ class Group extends Eloquent {
     
     public function categories()
     {
-	    return $this->hasMany('Category');
+        return $this->belongsToMany('Category', 'group_categories');
     }
-
 }

@@ -31,6 +31,7 @@ function ($scope, $state, Transaction, Category) {
 	
 	Category.index({limit:-1})
 		.then(function(data){
+			console.log("transaction.categories", data);
 			angular.forEach(data, function(r){
 				records.push(r);
 			})
@@ -40,7 +41,7 @@ function ($scope, $state, Transaction, Category) {
 		model: Transaction,
 		max_pages: 5,
 		fields: [
-			{ name:"transaction_at", label:"Date of transaction", type: 'date', placeholder: '2014-01-01' },
+			{ name:"traded_at", label:"Date of transaction", type: 'date', placeholder: '2014-01-01' },
 			{ name:"description", label:"Description", type: 'text', placeholder: 'Description' },
 			{ name:"category_id", label:"Category", type: 'related', 
 				related: { index: 'id', label: 'name', records: records }},
@@ -48,9 +49,9 @@ function ($scope, $state, Transaction, Category) {
 
 		],
 		order: {
-			'transaction_at': 'DESC'
+			'traded_at': 'DESC'
 		},
-		sortable: ['amount', 'category_id', 'transaction_at'],
+		sortable: ['amount', 'category_id', 'traded_at'],
 	};
 }]);
 

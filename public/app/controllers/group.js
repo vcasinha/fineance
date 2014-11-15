@@ -21,6 +21,25 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider,   
 
 app.controller('GroupIndexController', ['$scope', 'Group',
 function ($scope, Group) {
+
+	$scope.table_params = {
+		model: Group,
+		max_pages: 5,
+		states: {'edit': '/group'},
+		fields: [
+			{ name:"name", label:"Name", type: 'text', placeholder: 'Fixed income' },
+			{ name:"description", label:"Description", type: 'text', placeholder: 'Fixed income' },
+
+		],
+		order: {
+			'name': 'DESC'
+		},
+		sortable: ['name', 'description'],
+	};
+}]);
+
+app.controller('GroupIndexController2', ['$scope', 'Group',
+function ($scope, Group) {
 /*
 	$scope.table_params = {
 		model: Group,

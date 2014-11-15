@@ -16,13 +16,14 @@ class CreateTransactions extends Migration {
 	    {
 		    $table->engine = "InnoDB";
 	        $table->increments('id');
-	        $table->integer('category_id')->index('category_id');
-	        $table->string("description");
-	        $table->float("amount");
-	        $table->dateTime("transaction_at");
-			$table->dateTime("created_at");
-			$table->dateTime("updated_at");
-			$table->dateTime("deleted_at");
+	        $table->integer('account_id')->unsigned()->index('account_id');
+	        $table->integer('category_id')->unsigned()->index('category_id');
+	        $table->string('description');
+	        $table->float('amount');
+	        $table->float('checksum');
+	        $table->dateTime("traded_at");
+			$table->timestamps();
+			$table->softDeletes();
 	    });
 	}
 
@@ -33,7 +34,7 @@ class CreateTransactions extends Migration {
 	 */
 	public function down()
 	{
-		Schema::dropIfExists("transactions");
+		Schema::dropIfExists('transactions');
 	}
 
 }

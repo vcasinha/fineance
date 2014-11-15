@@ -1,0 +1,29 @@
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+    	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+	        <span class="sr-only">Toggle navigation</span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+		</button>
+		<a class="navbar-brand" ui-sref="home">Fineance</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    	<ul class="nav navbar-nav">
+	    	<li><a ui-sref="account">Accounts</a></li>
+			<li><a ui-sref="transaction">Transactions</a></li>
+	        <li><a ui-sref="category">Categories</a></li>
+	        <li><a ui-sref="group">Groups</a></li>
+	        <li><a ui-sref="stats">Stats</a></li>
+	        <li class="dropdown">
+	        	<a href="#" class="dropdown-toggle" data-toggle="dropdown">Misc <span class="caret"></span></a>
+				<ul class="dropdown-menu" role="menu">
+	            	<li ng-repeat="account in accounts" 
+	            		ng-click="account.active = true"
+	            		ng-class="{'active': account.active}"><a>{{account.name}}</a></li>
+	        	</ul>
+	        </li>
+      	</ul>
+    </div><!-- /.navbar-collapse -->

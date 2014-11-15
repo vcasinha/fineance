@@ -1,13 +1,8 @@
 <?php
 	
-class Category extends Eloquent {
+class Account extends Eloquent {
 	use SoftDeletingTrait;
     protected $fillable = array('name', 'description');
-    
-    public function groups()
-    {
-        return $this->belongsToMany('Group', 'group_categories');
-    }
     
     public function transactions()
     {

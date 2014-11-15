@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupsCategories extends Migration {
+class CreateAccounts extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateGroupsCategories extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('group_categories', function(Blueprint $table)
+		Schema::create('accounts', function(Blueprint $table)
 		{
 			$table->engine = "InnoDB";
 			$table->increments('id');
-			$table->integer('group_id')->unsigned()->index('group_id');
-			$table->integer('category_id')->unsigned();
+			$table->string('name', 40);
+			$table->string('description', 200);
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -30,7 +30,7 @@ class CreateGroupsCategories extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('group_categories');
+		Schema::drop('accounts');
 	}
 
 }

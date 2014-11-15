@@ -26,11 +26,16 @@ Route::group(array('prefix' => 'api'), function()
         // Has Auth Filter
     });
     
+    //Account
+    Route::resource('account', 'AccountController');
+    Route::get('account/{id}/recover', 'AccountController@recover');
+    
     //Transaction routes
     Route::resource('transaction', 'TransactionController');
     Route::get('stats/summary/{year?}', 'TransactionController@summaryYear');
     Route::get('categories/summary/period/{month?}', 'TransactionController@summaryCategoriesPeriod');
     Route::get('group/summary/year/{year?}', 'TransactionController@summaryGroupYear');
+    
     //Group routes
     Route::resource('group', 'GroupController');
     

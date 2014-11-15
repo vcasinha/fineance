@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest() and 1 == 0)
+	if (0 == 1 and Auth::guest())
 	{
 		if (Request::ajax())
 		{

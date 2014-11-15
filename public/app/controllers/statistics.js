@@ -1,5 +1,9 @@
 var app = angular.module('fineance.statistics', ['ui.router', 'ui.bootstrap']);
 
+//Categories per year
+//Groups per month
+//Groups per year
+
 app.config(['$stateProvider', '$urlRouterProvider', 
 function ($stateProvider,   $urlRouterProvider) {
 	$stateProvider

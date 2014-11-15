@@ -14,11 +14,12 @@ class CreateGroups extends Migration {
 	{
 		Schema::create('groups', function(Blueprint $table)
 		{
+			$table->engine = "InnoDB";
 			$table->increments('id');
 			$table->string('name', 32);
 			$table->string('description', 100);
 			$table->timestamps();
-			$table->dateTime("deleted_at");
+			$table->softDeletes();
 		});
 	}
 

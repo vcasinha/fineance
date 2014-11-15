@@ -17,6 +17,21 @@ app.directive('navStats', function() {
     };
 });
 
+app.directive('navigation', function(){
+	return {
+
+		templateUrl: 'app/html/partials/navigation.html',
+		controller: function($scope){
+			
+			$scope.locations = [
+				{label: 'Index', state: 'stats'},
+				{label: 'Categories', state: 'stats-categories'},
+				{label: 'Groups', state: 'stats-groups'}
+			];
+		}
+    };
+});
+
 app.controller('tableController', ['$scope', function($scope){
 	//Pagination
 	var default_params = {
@@ -24,9 +39,11 @@ app.controller('tableController', ['$scope', function($scope){
 		order: {},
 		sortable: [],
 		itemCount: 0,
-		page: 0,
+		page: 1,
+		last_page: 1,
 		records: [],
 		record: {},
+		trashed: false
 	};
 	
 	$scope.table = angular.extend(default_params, $scope.params);
@@ -34,7 +51,7 @@ app.controller('tableController', ['$scope', function($scope){
 	//Destroy record
 	$scope.table.destroy = function(record){
 		console.log("table.record.destroy", record);
-		$scope.table.model.destroy(record)
+		$scope.table.model.destroy(record).$promise
 			.then(
 				function(){
 					$scope.table.refresh();
@@ -47,7 +64,7 @@ app.controller('tableController', ['$scope', function($scope){
 	//Create record
 	$scope.table.create = function(record){
 		console.log("table.record.create", record);
-		$scope.table.model.create(record)
+		$scope.table.model.create(record).$promise
 			.then(function(){
 				$scope.table.record = {};
 				$scope.table.refresh();
@@ -56,27 +73,44 @@ app.controller('tableController', ['$scope', function($scope){
 			});
 	};
 
+	//Create record
+	$scope.table.recover = function(record){
+		console.log("table.record.recover", record);
+		$scope.table.model.recover(record).$promise
+			.then(function(){
+				$scope.table.refresh();
+			}, function(){
+				alert('failed');
+			});
+	};
 	
 	$scope.table.refresh = function(){
 		$scope.table.collection_params = {
+			trashed: $scope.table.trashed,
 			limit: 10,
-			offset: $scope.table.page * 10, 
+			offset: ($scope.table.page - 1) * 10, 
 			order: $scope.table.order
 		};
 		
-		console.log("table.refresh", $scope.table.collection_params);
+		var params = $scope.table.collection_params;
+		console.log("table.refresh", params);
 		
-		var query = $scope.table.model.query($scope.table.collection_params)
+		var query = $scope.table.model.query(params).$promise
 			.then(
 				function(response){
-					//console.log("query.response", response);
+					console.log("query.response", response);
 					$scope.table.records = response.data;
 					$scope.table.itemCount = response.total;
+					$scope.table.last_page = response.last_page;
 				}, 
 				function(res){
 					console.error(res.data);
 				});
 	};
+	
+	$scope.table.formatRecordValue = function(field_name, value){
+		return value;
+	}
 	
 	$scope.table.getRecordValue = function(record, field){
 		//console.log("getRecordValue", record, field);
@@ -125,7 +159,7 @@ app.controller('tableController', ['$scope', function($scope){
 		$scope.table.refresh();
 	}
 	
-	$scope.$watch('table.page', $scope.table.refresh);
+	$scope.$watchGroup(['table.page', 'table.trashed'], $scope.table.refresh);
 }]);
 
 app.directive('tableManager', function() {

@@ -1,5 +1,5 @@
 <?php
-	class CategoryController extends BaseController {
+	class CategoryController extends APIController {
 		
 		public function getTransactions($id)
 		{
