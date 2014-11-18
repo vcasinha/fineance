@@ -25,35 +25,61 @@ function ($stateProvider,   $urlRouterProvider) {
 		});
 }]);
 
-app.controller('TransactionIndexController', ['$scope', '$state', 'Transaction', 'Category',
-function ($scope, $state, Transaction, Category) {
-	var records = [];
+app.controller('TransactionIndexController', [
+	'$scope', 
+	'Transaction', 
+	'Category',
+	'Account',
+	function ($scope, Transaction, Category, Account) {
+		var records = [];
+		
+		$scope.accounts = Account.index();
+		$scope.record = {
+			account_id: 1,
+			category_id: 1,
+			traded_at: new Date(),
+		};
+		
+		$scope.refresh = function(){
+			$scope.$broadcast('table.update');
+		}
+		
+		$scope.toggleAccount = function(account_id){
+			console.log("transaction.toggleAccount", account_id);
+			$scope.filter.account_id = account_id;
+			$scope.record.account_id = account_id;
+			$scope.$broadcast('table.update');
+		}
+		
+		Category.index({limit:-1}).$promise
+			.then(function(data){
+				console.log("transaction.categories", data);
+				angular.forEach(data, function(r){
+					records.push(r);
+				})
+			});
+			
+		$scope.filter = {
+			account_id: 1,
+		};
+		
+		$scope.table_params = {
+			model: Transaction,
+			max_pages: 5,
+			fields: [
+				{ name:"traded_at", label:"Date of transaction", type: 'date', placeholder: '2014-01-01', required: true },
+				{ name:"description", label:"Description", type: 'text', placeholder: 'Description', required:true },
+				{ name:"category_id", label:"Category", type: 'related', 
+					related: { index: 'id', label: 'name', records: records }},
+				{ name:"amount", label:"Amount", type: 'number', placeholder: '12.3' },
 	
-	Category.index({limit:-1})
-		.then(function(data){
-			console.log("transaction.categories", data);
-			angular.forEach(data, function(r){
-				records.push(r);
-			})
-		});
-
-	$scope.table_params = {
-		model: Transaction,
-		max_pages: 5,
-		fields: [
-			{ name:"traded_at", label:"Date of transaction", type: 'date', placeholder: '2014-01-01' },
-			{ name:"description", label:"Description", type: 'text', placeholder: 'Description' },
-			{ name:"category_id", label:"Category", type: 'related', 
-				related: { index: 'id', label: 'name', records: records }},
-			{ name:"amount", label:"Amount", type: 'number', placeholder: '12.3' },
-
-		],
-		order: {
-			'traded_at': 'DESC'
-		},
-		sortable: ['amount', 'category_id', 'traded_at'],
-	};
-}]);
+			],
+			order: {
+				'traded_at': 'DESC'
+			},
+			sortable: ['amount', 'category_id', 'traded_at'],
+		};
+	}]);
 
 app.controller('TransactionIndexControllerx', ['$scope', '$state', 'Transaction', 'Category',
 function ($scope, $state, Transaction, Category) {

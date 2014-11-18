@@ -176,8 +176,14 @@ function(API) {
     };
 }]);
 
-app.factory('Group', ['$resource', 
-function($resource) {
+app.factory('Group', ['API', 
+function(API) {
+	var collection_options = {
+		name: 'Group',
+		url: '/api/group/:id'
+	};
+
+	return API.collection(collection_options);
     var url = '/api/group/:id';
     var params = {
         id:'@id'

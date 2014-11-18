@@ -28,12 +28,15 @@ class APIController extends BaseController {
 		    $object->onlyTrashed();
 	    }
 	    
-	    $whereField = Input::get('whereField');
-	    $whereValue = Input::get('whereValue');
-	    if($whereField and $whereValue !== null)
-	    {
-			$object->where($whereField, $whereValue);    
-	    }
+	    $where = Input::get('where', "{}");
+		$where = json_decode($where, true);
+		if(is_array($where))
+		{
+		    foreach($where as $field => $value)
+		    {
+			    $object->where($field, $value);
+		    }
+		}
 	    
 	    $order_by = Input::get('order', "{}");
 		$order_by = json_decode($order_by, true);
@@ -45,23 +48,26 @@ class APIController extends BaseController {
 		    }
 		}
 
-	    
-        $limit = Input::get('limit', 0);
 		$offset = Input::get('offset', 0);
-		
-		if($offset)
+		if($offset > 0)
 		{
 			$object->skip($offset);
 		}
-		
+	    
+	    
+        $limit = Input::get('limit', 0);
         $object->take($limit);
         
         
         $records = [];
 		if(Input::get('paginate'))
 		{
-			$limit = Input::get('limit', 10);
-			Paginator::setCurrentPage($offset/$limit);
+			if($limit == 0)
+			{
+				$limit = 10;
+			}
+			
+			Paginator::setCurrentPage((int)($offset/$limit) + 1);
 			$records = $object->paginate($limit);
 		}
 		else
@@ -143,7 +149,8 @@ class APIController extends BaseController {
 			
 			if($validator->fails())
 			{
-				throw new Exception("validation.failed");
+				$messages = $validator->messages();
+				throw new Exception("validation.failed " . json_encode($messages));
 			}
 		}
 		

@@ -2,11 +2,11 @@
 	class GroupController extends APIController {
 		protected $rules_insert = [
 				'name' => 'required',
-				'description' => 'min:5',
+				'description' => 'min:3',
 			];
 		protected $rules_update = [
-				'name' => 'min:5',
-				'description' => 'min:5'
+				'name' => 'min:3',
+				'description' => 'min:3'
 			];
 		
 		public function __construct(Group $model)

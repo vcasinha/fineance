@@ -1,0 +1,40 @@
+<div class="container" style="margin:20px;">
+	<div class="row">
+		<h2>New</h2>
+	</div>
+	<div class="row">
+		<form name="form" novalidate="" role="form" class="col-xs-5">
+			<span class="input-groupx" ng-hide="field.viewonly" ng-repeat="field in fields">
+				<label class="" for="{{field.name}}">{{field.label}}</label>
+			    <input type="{{field.type}}" 
+			    		pattern="{{field.pattern}}" 
+						class="form-control" 
+						ng-model="record[field.name]" 
+						placeholder="{{field.label}}" 
+						ng-required="field.required"
+						date-format="YYYY-MM-DD"
+						ng-show="field.type == 'date'"/>
+			    <input type="{{field.type}}" 
+			    		pattern="{{field.pattern}}" 
+						class="form-control" 
+						ng-model="record[field.name]" 
+						placeholder="{{field.label}}" 
+						ng-required="field.required"
+						ng-show="field.type != 'related' && field.type != 'date'"/>
+				<select ng-show="field.type == 'related'"
+						class="form-control" 
+						ng-model="record[field.name]">
+					<option disabled selected>({{field.label}})</option>
+					<option ng-repeat="related in field.related.records" 
+							value="{{related[field.related.index]}}">{{related[field.related.label]}}</option>
+				</select>
+			</span>
+		</form>
+	</div>
+	<div class="row" style="margin-top:20px;">
+		<button ng-click="create(record)" 
+				class="btn btn-primary" 
+				ng-disabled="form.$invalid">SAVE</button>
+		<button class="btn btn-default" ng-click="cancel()">CLOSE</button>
+	</div>
+</div>

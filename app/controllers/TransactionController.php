@@ -1,10 +1,10 @@
 <?php
 	class TransactionController extends APIController {
 		protected $rules_insert = [
-				'account_id' => 'numeric',
-				'category_id' => 'numeric',
+				'account_id' => 'required',
+				'category_id' => 'required',
 				'description' => 'min:3',
-				'transaction_at' => 'required',
+				'traded_at' => 'required|date',
 				'amount' => 'required|numeric'
 			];
 		protected $rules_update = [
