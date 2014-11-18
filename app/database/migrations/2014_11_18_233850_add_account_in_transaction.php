@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddAccountInTransaction extends Migration {
+class CreateSettings extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,10 @@ class AddAccountInTransaction extends Migration {
 	 */
 	public function up()
 	{
-		//
+		Schema::table('transactions', function($table)
+		{
+		    $table->integer('account_id', false, true)->index('account_id');
+		});
 	}
 
 	/**
@@ -22,7 +25,10 @@ class AddAccountInTransaction extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::table('transactions', function($table)
+		{
+		    $table->dropColumn('account_id');
+		});
 	}
 
 }
