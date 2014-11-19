@@ -3,6 +3,8 @@ var app = angular.module('fineance', [
 	'ui.router', 
 	'ui.bootstrap',
 	'nvd3ChartDirectives',
+	'chartjs',
+	'oo.table',
 	'fineance.services',
 	'fineance.factories',
 	'fineance.directives',

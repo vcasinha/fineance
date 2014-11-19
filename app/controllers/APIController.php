@@ -143,9 +143,10 @@ class APIController extends BaseController {
 	{
 		$input = Input::json();
 		
+		$record = (array)$input->all();
 		if(is_array($this->rules_insert))
 		{
-			$validator = Validator::make((array)$input->all(), $this->rules_insert);
+			$validator = Validator::make($record, $this->rules_insert);
 			
 			if($validator->fails())
 			{
@@ -154,8 +155,11 @@ class APIController extends BaseController {
 			}
 		}
 		
-		$record = $this->model->create($input->all());
-		
+		$record = $this->model->create($record);
+		$queries = DB::getQueryLog();
+		$last_query = end($queries);
+		var_dump($last_query);
+		die();
 		return $record;
 	}
 }

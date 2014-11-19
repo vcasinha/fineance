@@ -31,15 +31,6 @@ app.controller('TransactionIndexController', [
 	'Category',
 	'Account',
 	function ($scope, Transaction, Category, Account) {
-		var records = [];
-		
-		$scope.accounts = Account.index();
-		$scope.record = {
-			account_id: 1,
-			category_id: 1,
-			traded_at: new Date(),
-		};
-		
 		$scope.refresh = function(){
 			$scope.$broadcast('table.update');
 		}
@@ -51,33 +42,44 @@ app.controller('TransactionIndexController', [
 			$scope.$broadcast('table.update');
 		}
 		
-		Category.index({limit:-1}).$promise
-			.then(function(data){
-				console.log("transaction.categories", data);
-				angular.forEach(data, function(r){
-					records.push(r);
-				})
-			});
+		var categories = Category.index({limit:-1});
 			
 		$scope.filter = {
 			account_id: 1,
 		};
 		
+		$scope.accounts = Account.index();
+		$scope.accounts.$promise
+			.then(function(accounts){
+				if(accounts.length > 0){
+					$scope.filter.account_id = accounts[0].id;
+					$scope.refresh();
+				}
+				
+			});
+
+		//Default empty record
+		$scope.record = {
+			account_id: 1,
+			category_id: 1,
+			traded_at: new Date(),
+		};
+
+		//Table parameters
 		$scope.table_params = {
 			model: Transaction,
 			max_pages: 5,
 			fields: [
-				{ name:"traded_at", label:"Date of transaction", type: 'date', placeholder: '2014-01-01', required: true },
+				{ name:"traded_at", label:"Date of transaction", type: 'date', placeholder: '2014-01-01', required: true, output: 'date' },
 				{ name:"description", label:"Description", type: 'text', placeholder: 'Description', required:true },
-				{ name:"category_id", label:"Category", type: 'related', 
-					related: { index: 'id', label: 'name', records: records }},
+				{ name:"category_id", label:"Category", type: 'related', related: { index: 'id', label: 'name', records: categories }},
 				{ name:"amount", label:"Amount", type: 'number', placeholder: '12.3' },
 	
 			],
 			order: {
 				'traded_at': 'DESC'
 			},
-			sortable: ['amount', 'category_id', 'traded_at'],
+			sortable: ['amount', 'description', 'category_id', 'traded_at'],
 		};
 	}]);
 

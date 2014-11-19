@@ -37,10 +37,13 @@
 		<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 		<script src="/bower_components/momentjs/min/moment.min.js"></script>
 		<script src="/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+		<script src="/bower_components/Chart.js/Chart.min.js"></script>
+		<script src="/bower_components/ng-chartjs/dist/angular-chartjs.min.js"></script>
 		<script src="/app/main.js"></script>
 		<script src="/app/lib/services.js"></script>
 		<script src="/app/lib/factories.js"></script>
 		<script src="/app/lib/directives.js"></script>
+		<script src="/app/lib/oo/table.js"></script>
 		<script src="/app/controllers/account.js"></script>
 		<script src="/app/controllers/transaction.js"></script>
 		<script src="/app/controllers/category.js"></script>

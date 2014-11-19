@@ -3,7 +3,7 @@
 class Transaction extends Eloquent {
 	use SoftDeletingTrait;
 	
-    protected $fillable = array('account_id', 'category_id', 'description', 'amount', 'transaction_at');
+    protected $fillable = array('account_id', 'category_id', 'description', 'amount', 'traded_at');
     
 	public function account()
 	{
