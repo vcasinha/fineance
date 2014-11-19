@@ -3,7 +3,7 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/bower_components/angular-ui/build/angular-ui.min.css">
-		<link rel="stylesheet" type="text/css" href="/app/css/theme3.css">
+		<link rel="stylesheet" type="text/css" href="/app/css/theme2.css">
 		<link rel="stylesheet" type="text/css" href="/app/css/style.css">
 		<link rel="stylesheet" href="/bower_components/nvd3/nv.d3.css"/>
 	</head>
@@ -37,10 +37,13 @@
 		<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
 		<script src="/bower_components/momentjs/min/moment.min.js"></script>
 		<script src="/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
+		<script src="/bower_components/Chart.js/Chart.min.js"></script>
+		<script src="/bower_components/ng-chartjs/dist/angular-chartjs.min.js"></script>
 		<script src="/app/main.js"></script>
 		<script src="/app/lib/services.js"></script>
 		<script src="/app/lib/factories.js"></script>
 		<script src="/app/lib/directives.js"></script>
+		<script src="/app/lib/oo/table.js"></script>
 		<script src="/app/controllers/account.js"></script>
 		<script src="/app/controllers/transaction.js"></script>
 		<script src="/app/controllers/category.js"></script>

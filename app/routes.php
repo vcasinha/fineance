@@ -32,9 +32,11 @@ Route::group(array('prefix' => 'api'), function()
     
     //Transaction routes
     Route::resource('transaction', 'TransactionController');
-    Route::get('stats/summary/{year?}', 'TransactionController@summaryYear');
-    Route::get('categories/summary/period/{month?}', 'TransactionController@summaryCategoriesPeriod');
-    Route::get('group/summary/year/{year?}', 'TransactionController@summaryGroupYear');
+
+    //Statistics
+    Route::get('stats/summary/{year?}', 'StatisticsController@summaryYear');
+    Route::get('categories/summary/period/{month?}', 'StatisticsController@summaryCategoriesPeriod');
+    Route::get('group/summary/year/{year?}', 'StatisticsController@summaryGroupYear');
     
     //Group routes
     Route::resource('group', 'GroupController');

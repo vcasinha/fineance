@@ -50,9 +50,9 @@ function ($scope, scopeToggle, StatsCharts, Stats, Category) {
     };
 
     scopeToggle($scope, flags);
-    
+
     function refresh(){
-        Category.index()
+        Category.index().$promise
             .then(function(categories){
                 var series_params = [];
 
@@ -63,6 +63,7 @@ function ($scope, scopeToggle, StatsCharts, Stats, Category) {
                         label: category.name
                     });
                 });
+
                 StatsCharts.categories({period: $scope.period}, series_params, function(chart){
                     $scope.chart = chart;
                 });

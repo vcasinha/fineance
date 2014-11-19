@@ -21,7 +21,7 @@ class CreateTransactions extends Migration {
 	        $table->string('description');
 	        $table->float('amount');
 	        $table->float('checksum');
-	        $table->dateTime("traded_at");
+	        $table->timestamp("traded_at");
 			$table->timestamps();
 			$table->softDeletes();
 	    });

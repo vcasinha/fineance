@@ -27,7 +27,7 @@ class AddAccountInTransaction extends Migration {
 	{
 		Schema::table('transactions', function($table)
 		{
-		    $table->dropColumn('account_id');
+		    //$table->dropColumn('account_id');
 		});
 	}
 
