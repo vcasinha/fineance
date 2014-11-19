@@ -13,13 +13,13 @@
 				ng-model="table.show_delete"
 			  	btn-checkbox
 			  	btn-checkbox-true="true"
-			  	btn-checkbox-false="false" ng-hide="table.show_trashed">EDIT</button>
+			  	btn-checkbox-false="false" ng-disabled="table.show_trashed">EDIT</button>
 			<button 
 			  	class="btn btn-sm btn-default"
 			  	ng-model="table.show_trashed"
 			  	btn-checkbox
 			  	btn-checkbox-true="true"
-			  	btn-checkbox-false="false" ng-hide="table.show_delete">RECOVER</button>
+			  	btn-checkbox-false="false" ng-disabled="table.show_delete">RECOVER</button>
 		</div>
 	</div>
 	<div class="col-xs-6">

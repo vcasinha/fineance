@@ -3,7 +3,7 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/bower_components/angular-ui/build/angular-ui.min.css">
-		<link rel="stylesheet" type="text/css" href="/app/css/theme3.css">
+		<link rel="stylesheet" type="text/css" href="/app/css/theme2.css">
 		<link rel="stylesheet" type="text/css" href="/app/css/style.css">
 		<link rel="stylesheet" href="/bower_components/nvd3/nv.d3.css"/>
 	</head>
