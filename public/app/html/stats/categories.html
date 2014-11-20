@@ -4,7 +4,7 @@
 		<div class="form-group">
 			<label>Transaction Month</label>
 	        <p class="input-group">
-	            <input type="number" class="form-control" ng-model="period" maxlength="4"/>
+	            <input type="number" class="form-control" ng-model="period" maxlength="4" max="2014" min="2011"/>
 	        </p>
 		</div>
 	</div>
@@ -18,16 +18,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-12" ng-show="showChart">
-		<nvd3-stacked-area-chart
-	        data = "chart.series"
-	        showXAxis = "true"
-	        showYAxis = "true"
-	        tooltips = "true"
-	        interactive = "true"
-	        height="300"
-	        showControls="true"
-	        showLegend="true"
-	        ></nvd3-multi-bar-chart>
+		<nvd3 data = "chart.data" options="chart.options"></nvd3>
 	</div>
 </div>
 

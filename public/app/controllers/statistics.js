@@ -33,15 +33,49 @@ function ($scope, scopeToggle, StatsCharts) {
     };
 
     scopeToggle($scope, flags);
-	
+    $scope.chart = {
+        options: {
+            chart: {
+                type: 'historicalBarChart',
+                useVoronoi: false,
+                height: 300,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 60,
+                    left: 45
+                },
+                clipEdge: true,
+                staggerLabels: true,
+                transitionDuration: 200,
+                stacked: false,
+                xAxis: {
+                    axisLabel: 'Month',
+                    showMaxMin: false,
+                    tickFormat: function(d){
+                        return d3.format(',f')(d);
+                    }
+                },
+                yAxis: {
+                    axisLabel: 'Amount',
+                    axisLabelDistance: 40,
+                    tickFormat: function(d){
+                        return d3.format(',f')(d);
+                    }
+                }
+            }
+        }
+    };
+
     StatsCharts.index({period: '2014'}, function(chart){
-        $scope.chart = chart;
+        $scope.chart.data = chart;
+        console.log("statscharts.index", chart);
     });
 }]);
 
 app.controller('StatsCategoriesController', ['$scope', 'scopeToggle', 'StatsCharts','Stats', 'Category', 
 function ($scope, scopeToggle, StatsCharts, Stats, Category) {
-    $scope.period = 2014;
+    $scope.period = parseInt(moment().format('YYYY'));
 
     var flags = {
         showList: false,
@@ -50,6 +84,39 @@ function ($scope, scopeToggle, StatsCharts, Stats, Category) {
     };
 
     scopeToggle($scope, flags);
+    $scope.chart = {
+        options: {
+            chart: {
+                type: 'stackedAreaChart',
+                useVoronoi: true,
+                height: 300,
+                margin : {
+                    top: 20,
+                    right: 20,
+                    bottom: 60,
+                    left: 45
+                },
+                clipEdge: true,
+                staggerLabels: true,
+                transitionDuration: 200,
+                stacked: false,
+                xAxis: {
+                    axisLabel: 'Month',
+                    showMaxMin: false,
+                    tickFormat: function(d){
+                        return d3.format(',f')(d);
+                    }
+                },
+                yAxis: {
+                    axisLabel: 'Amount',
+                    axisLabelDistance: 40,
+                    tickFormat: function(d){
+                        return d3.format(',f')(d);
+                    }
+                }
+            }
+        }
+    };
 
     function refresh(){
         Category.index().$promise
@@ -65,7 +132,8 @@ function ($scope, scopeToggle, StatsCharts, Stats, Category) {
                 });
 
                 StatsCharts.categories({period: $scope.period}, series_params, function(chart){
-                    $scope.chart = chart;
+                    $scope.chart.data = chart;
+                    console.log('chart.data', $scope.chart.data);
                 });
             });
     }

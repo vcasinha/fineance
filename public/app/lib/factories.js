@@ -1,7 +1,7 @@
 var app = angular.module('fineance.factories', ['ui.router', 'ui.bootstrap']);
 
 app.factory('API', [
-	'$resource', 
+	'$cachedResource', 
 	function($resource){
 		var API = {
 			collection: function(options){
@@ -19,7 +19,7 @@ app.factory('API', [
 			    angular.extend(params, options.params);
 			    angular.extend(methods, options.methods);
 			    
-				var resource = $resource(options.url, params, methods);
+				var resource = $resource(options.name, options.url, params, methods);
 				var controller = {
 			        create: function(record){
 			            console.log("collection.save", options.name, record);
@@ -313,7 +313,7 @@ function(Stats) {
         angular.forEach(data, function(record, c){
             angular.forEach(fieldsSerie, function(field, s){
                 var serie = series[s];
-                var pair = [Number(record[index]), Number(record[field])];
+                var pair = {x: Number(record[index]), y: Number(record[field])};
                 serie.values[c] = pair;
             });
         });
@@ -342,7 +342,7 @@ function(Stats) {
             if(!serie){
 	            console.error("statscharts.recordMissing", dimension_field, record[dimension_field]);
             }
-            serie.values[Number(record[index_field] - 1)] = [Number(record[index_field]), Number(record[value_field])];
+            serie.values[Number(record[index_field] - 1)] = { x: Number(record[index_field]), y: Number(record[value_field])};
         });
         
         angular.forEach(series, function(serie){
@@ -359,12 +359,31 @@ function(Stats) {
         console.error("failed", arguments);
     };
 
+    function initSerie(name){
+        if(name == null){
+            name = "Ungroupped";
+        }
+        
+        console.log("initSerie", name);
+        var serie = {
+            key: name,
+            //color: getRandomColor(),
+            values: []
+        }
+
+        for(var i=0;i<12;i++){
+            serie.values.push({x: i+1, y:0});
+        }
+        
+        return serie;
+    }
+
     return {
         index: function(params, callback){
             Stats.index(params).then(
                 function(data){
                     var chart_data = prepareIndexChart(data, 'month', ['total']);
-                    callback(chart_data);
+                    callback(chart_data.series);
                 }, handleErrors);
         },
         categories: function(params, series_params, callback){
@@ -373,23 +392,11 @@ function(Stats) {
                     console.log("statscharts.categories", params, series_params);
                     //prepareChart(data, 'category_id', 'month', 'total', series_params);
                     var chart_data = prepareMultipleSeriesChart(data, 'category_id', 'month', 'total', series_params);
-                    callback(chart_data);
+                    callback(chart_data.series);
                 }, 
                 handleErrors);
         },
-        initSerie: function initSerie(name){
-            if(name == null){
-                name = "Ungroupped";
-            }
-            
-            console.log("initSerie", name);
-            
-            return {
-                key: name,
-                //color: getRandomColor(),
-                values: [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0], [7, 0], [8, 0], [9, 0], [10, 0], [11, 0], [12, 0]]
-            };
-        }
+        initSerie: initSerie
     };
 }]);
 

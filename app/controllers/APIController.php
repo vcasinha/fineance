@@ -158,8 +158,7 @@ class APIController extends BaseController {
 		$record = $this->model->create($record);
 		$queries = DB::getQueryLog();
 		$last_query = end($queries);
-		var_dump($last_query);
-		die();
+
 		return $record;
 	}
 }

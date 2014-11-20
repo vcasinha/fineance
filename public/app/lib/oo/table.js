@@ -191,7 +191,9 @@ app.controller('tableController', function($scope, $modal, $log){
             //console.log('table.getRecordValue.related', record, field.related );
             return item[field.related.label];
         }
-        
+        if(!field.name in record){
+            $log.warn('table.getRecordValue.missingKey', field.name, record);
+        }
         var value = record[field.name];
         switch(field.output){
             case 'date':

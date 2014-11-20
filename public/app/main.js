@@ -1,9 +1,9 @@
-var app = angular.module('fineance', [
-	'ngResource', 
+var modules = [
+	'ngResource',
+	'ngCachedResource',
 	'ui.router', 
 	'ui.bootstrap',
-	'nvd3ChartDirectives',
-	'chartjs',
+	'nvd3',
 	'oo.table',
 	'fineance.services',
 	'fineance.factories',
@@ -14,22 +14,20 @@ var app = angular.module('fineance', [
 	'fineance.group',
 	'fineance.statistics',
 	'fineance.pages'
-]);
+];
+var app = angular.module('fineance', modules);
 
 app.config([
 	'$stateProvider', 
 	'$urlRouterProvider', 
 	'$resourceProvider', 
 	function ($stateProvider,   $urlRouterProvider, $resourceProvider) {
-		$resourceProvider.defaults.stripTrailingSlashes = false;
+		//$resourceProvider.defaults.stripTrailingSlashes = false;
 		
 		$urlRouterProvider
-	        // The `when` method says if the url is ever the 1st param, then redirect to the 2nd param
-	        // Here we are just setting up some convenience urls.
 	        .when('/c?id', '/contacts/:id')
 	        .when('/user/:id', '/contacts/:id')
 	
-	        // If the url is ever invalid, e.g. '/asdf', then redirect to '/' aka the home state
 	        .otherwise('/frontpage');
 	}]);
 

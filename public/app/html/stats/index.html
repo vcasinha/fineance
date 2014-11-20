@@ -10,14 +10,7 @@
 </div>
 <div class="row top7">
 	<div class="col-xs-12">
-		<nvd3-line-chart
-	        data="chart.series"
-	        showXAxis="true"
-	        showYAxis="true"
-	        tooltips="true"
-	        interactive="true"
-	        height="300" ng-show="showChart">
-		</nvd3-line-chart>
+		<nvd3 data = "chart.data" options="chart.options"></nvd3>
 	</div>
 </div>
 <div class="row top7">

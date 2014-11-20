@@ -1,0 +1,44 @@
+{
+  "name": "angular-cached-resource",
+  "main": "angular-cached-resource.js",
+  "version": "1.0.3",
+  "homepage": "https://github.com/goodeggs/angular-cached-resource",
+  "authors": [
+    "Max Edmands <max@goodeggs.com>",
+    "Aaron Borden <aaron@goodeggs.com>"
+  ],
+  "description": "An AngularJS module to interact with RESTful resources, even when browser is offline",
+  "keywords": [
+    "angularjs",
+    "resource",
+    "cache"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "lib",
+    "karma.conf.js"
+  ],
+  "dependencies": {
+    "angular-resource": "~1.2.14",
+    "angular": "~1.2.14"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.2.14"
+  },
+  "_release": "1.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.3",
+    "commit": "d2baf78a7670887b36610ae3f00291ab8bc6b5b1"
+  },
+  "_source": "git://github.com/goodeggs/angular-cached-resource.git",
+  "_target": "~1.0.3",
+  "_originalSource": "angular-cached-resource",
+  "_direct": true
+}

@@ -7,7 +7,7 @@
 		<link rel="stylesheet" type="text/css" href="/app/css/style.css">
 		<link rel="stylesheet" href="/bower_components/nvd3/nv.d3.css"/>
 	</head>
-	<body ng-app="fineance">
+	<body ng-app="fineance" ng-cloak>
 		<div class="container-fluid" style="margin-top:5px;">
 			<div class="row">
 				<div class="col-12-xs">
@@ -25,20 +25,24 @@
 		
 		<!-- Scripts -->
 		<script src="/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- 		<script src="/bower_components/d3/d3.js"></script> -->
+		<script src="/bower_components/momentjs/min/moment.min.js"></script>
+		<script src="/bower_components/angular/angular.min.js"></script>
+
 		<script src="/d3.v2.min.js"></script>
 		<script src="/bower_components/nvd3/nv.d3.js"></script>
 		<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
-		<script src="/bower_components/angular/angular.min.js"></script>
-		<script src="/bower_components/angular-ui/build/angular-ui.min.js"></script>
-		<script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-		<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-		<script src="/bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-		<script src="/bower_components/angular-resource/angular-resource.min.js"></script>
-		<script src="/bower_components/momentjs/min/moment.min.js"></script>
+
+		<!-- Angular modules -->
+		<script src="/bower_components/angular-ui/build/angular-ui.js"></script>
+		<script src="/bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+		<script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+		<script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+		<script src="/bower_components/angular-resource/angular-resource.js"></script>
+		<script src="/bower_components/angular-cached-resource/angular-cached-resource.js"></script>
 		<script src="/bower_components/angularjs-nvd3-directives/dist/angularjs-nvd3-directives.js"></script>
-		<script src="/bower_components/Chart.js/Chart.min.js"></script>
-		<script src="/bower_components/ng-chartjs/dist/angular-chartjs.min.js"></script>
+		<script src="/bower_components/angular-nvd3/dist/angular-nvd3.js"></script>
+
+		<!-- Application -->
 		<script src="/app/main.js"></script>
 		<script src="/app/lib/services.js"></script>
 		<script src="/app/lib/factories.js"></script>
