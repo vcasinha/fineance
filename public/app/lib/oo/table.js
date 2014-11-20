@@ -149,7 +149,7 @@ app.controller('tableController', function($scope, $modal, $log){
     $scope.table.refresh = function(){
         angular.copy($scope.record, $scope.table.record);
         $scope.table.collection_params = {
-            trashed: $scope.table.trashed,
+            trashed: $scope.table.show_trashed,
             limit: 10,
             offset: ($scope.table.page - 1) * 10, 
             order: $scope.table.order,
@@ -233,7 +233,7 @@ app.controller('tableController', function($scope, $modal, $log){
     }
     
     $scope.table.collection_params = {
-        trashed: $scope.table.trashed,
+        trashed: $scope.table.show_trashed,
         limit: 10,
         offset: ($scope.table.page - 1) * 10, 
         order: $scope.table.order,
@@ -242,5 +242,6 @@ app.controller('tableController', function($scope, $modal, $log){
 
     //Watches and events
     $scope.$on('table.update', $scope.table.refresh);
+    $scope.$watch('table.show_trashed', $scope.table.refresh);
     $scope.$watchGroup(['table.page', 'table.trashed'], $scope.table.refresh);
 });
