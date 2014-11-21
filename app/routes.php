@@ -34,6 +34,8 @@ Route::group(array('prefix' => 'api'), function()
     Route::resource('transaction', 'TransactionController');
 
     //Statistics
+    Route::get('stats/categories/year/{year?}', 'StatisticsController@averageCategoriesYear');
+    Route::get('stats/categories/month/{month?}', 'StatisticsController@averageCategoriesMonth');
     Route::get('stats/summary/{year?}', 'StatisticsController@summaryYear');
     Route::get('categories/summary/period/{month?}', 'StatisticsController@summaryCategoriesPeriod');
     Route::get('group/summary/year/{year?}', 'StatisticsController@summaryGroupYear');
@@ -42,7 +44,7 @@ Route::group(array('prefix' => 'api'), function()
     Route::resource('group', 'GroupController');
     
     //Group Category routes
-    Route::resource('group/{id}/category', 'GroupCategoryController');
+    Route::resource('group/{group_id}/category', 'GroupCategoryController');
     
     //Category routes
     Route::resource('category', 'CategoryController');

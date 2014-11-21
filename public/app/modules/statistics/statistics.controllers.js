@@ -1,4 +1,4 @@
-var app = angular.module('fineance.statistics', ['ui.router', 'ui.bootstrap']);
+var app = angular.module('fineance.statistics', ['fineance.statistics.factories']);
 
 //Categories per year
 //Groups per month
@@ -36,38 +36,27 @@ function ($scope, scopeToggle, StatsCharts) {
     $scope.chart = {
         options: {
             chart: {
-                type: 'historicalBarChart',
-                useVoronoi: false,
-                height: 300,
-                margin : {
-                    top: 20,
-                    right: 20,
-                    bottom: 60,
-                    left: 45
-                },
-                clipEdge: true,
-                staggerLabels: true,
+                type: 'pieChart',
+                height: 500,
+                x: function(d){return d.key;},
+                y: function(d){return d.y;},
+                showLabels: true,
+                donut: true,
                 transitionDuration: 200,
-                stacked: false,
-                xAxis: {
-                    axisLabel: 'Month',
-                    showMaxMin: false,
-                    tickFormat: function(d){
-                        return d3.format(',f')(d);
-                    }
-                },
-                yAxis: {
-                    axisLabel: 'Amount',
-                    axisLabelDistance: 40,
-                    tickFormat: function(d){
-                        return d3.format(',f')(d);
+                labelThreshold: 0.01,
+                legend: {
+                    margin: {
+                        top: 5,
+                        right: 35,
+                        bottom: 5,
+                        left: 0
                     }
                 }
             }
         }
     };
 
-    StatsCharts.index({period: '2014'}, function(chart){
+    StatsCharts.categoriesYear({period: '2014'}, function(chart){
         $scope.chart.data = chart;
         console.log("statscharts.index", chart);
     });
@@ -87,7 +76,7 @@ function ($scope, scopeToggle, StatsCharts, Stats, Category) {
     $scope.chart = {
         options: {
             chart: {
-                type: 'stackedAreaChart',
+                type: 'multiBarChart',
                 useVoronoi: true,
                 height: 300,
                 margin : {
@@ -141,33 +130,48 @@ function ($scope, scopeToggle, StatsCharts, Stats, Category) {
     $scope.$watch('period', refresh);
 }]);
 
-app.controller('StatsGroupsController', ['$scope', 'Stats',
-function ($scope, Stats, Group) {
-	var series = {};
-	var charts = [];
-	
-    var prepareChart = function(data){
-        $scope.stats = data;
-        angular.forEach(data, function(record){
-            var group = record.group;
-            serie = series[group];
-            if(!serie){
-                series[group] = initSerie(record.group, record.group);
-            }
-            
-            serie = series[group];
-            serie.values[Number(record.month - 1)] = [Number(record.month), Number(record.total)];
-        });
-
-        angular.forEach(series, function(serie){
-            console.log(serie);
-            charts[charts.length] = serie;
-        });
-        $scope.chartData = charts;
+app.controller('StatsGroupsController', ['$scope', 'StatsCharts', 'scopeToggle',
+function ($scope, StatsCharts, scopeToggle) {
+    var flags = {
+        showList: false,
+        showDebug: false,
+        showChart: true
     };
+    
+    scopeToggle($scope, flags);
+	$scope.period = parseInt(moment().format('YYYY'));
+	
+    $scope.chart = {
+        options: {
+            chart: {
+                type: 'pieChart',
+                height: 400,
+                x: function(d){return d.key;},
+                y: function(d){return d.y;},
+                showLabels: true,
+                donut: true,
+                transitionDuration: 200,
+                labelThreshold: 0.01,
+                legend: {
+                    margin: {
+                        top: 5,
+                        right: 35,
+                        bottom: 5,
+                        left: 0
+                    }
+                }
+            }
+        }
+    };
+    
+	function refresh(){
+	    StatsCharts.groupsYear({year: $scope.period}, function(data){
+	        $scope.chart.data = data;
+	        console.log("statscharts.groupsYear", $scope.chart);
+	    });
+	}
 
-	$scope.chartData = [];
-	Stats.groups({year: '2014-11'}).then(prepareChart);
+    $scope.$watch('period', refresh);
 }]);
 
 function initSerie(name){

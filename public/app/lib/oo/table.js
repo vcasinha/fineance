@@ -11,7 +11,6 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, fiel
     };
     
     $scope.create = function (new_record) {
-        
         var clean_record = {};
         angular.copy(new_record, clean_record);
         angular.forEach(fields, function(field){
@@ -39,6 +38,7 @@ app.controller('ModalInstanceCtrl', function ($scope, $modalInstance, $log, fiel
     };
 });
 
+//Table manager
 app.directive('tableManager', function() {
     return {
         scope: {
@@ -53,6 +53,7 @@ app.directive('tableManager', function() {
     };
 });
 
+//Table controller
 app.controller('tableController', function($scope, $modal, $log){
     //Pagination
     var default_params = {
@@ -65,7 +66,7 @@ app.controller('tableController', function($scope, $modal, $log){
         records: [],
         record: {},
         trashed: false,
-        show_delete: false,
+        edit_mode: false,
     };
     
     $scope.table = angular.extend({}, default_params, $scope.params);
@@ -86,6 +87,43 @@ app.controller('tableController', function($scope, $modal, $log){
                 },
                 record: function(){
                     return $scope.record;
+                },
+                model: function(){
+                    return $scope.table.model;
+                }
+            }
+        };
+        
+        var modalInstance = $modal.open(modal_settings);
+            
+        modalInstance.result.then(
+            function (record) {
+                $scope.table.refresh();
+            }, 
+            function () {
+                $log.info('Modal dismissed at: ' + new Date());
+            }
+        );
+    };
+
+    //Modal create
+    $scope.modalDialog = function (name, record) {
+	    var action = $scope.table.actions[name];
+	    if(!action){
+		    throw "Invalid action " + name;
+	    }
+	    
+        var modal_settings = {
+            backdrop: 'static',
+            templateUrl: action.templateUrl,
+            controller: action.controller,
+            size: action.size,
+            resolve: {
+                fields: function (){
+                    return $scope.table.fields;
+                },
+                record: function(){
+                    return record;
                 },
                 model: function(){
                     return $scope.table.model;

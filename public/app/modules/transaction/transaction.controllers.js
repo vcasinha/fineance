@@ -1,4 +1,4 @@
-var app = angular.module('fineance.transaction', ['ui.router', 'ui.bootstrap']);
+var app = angular.module('fineance.transaction', ['fineance.transaction.factories']);
 
 app.directive('tabletransactions', function() {
 	return {

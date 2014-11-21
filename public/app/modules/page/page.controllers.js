@@ -1,4 +1,4 @@
-var app = angular.module('fineance.pages', []);
+var app = angular.module('fineance.pages', ['fineance.pages.factories']);
 
 app.config(['$stateProvider', '$urlRouterProvider', 
 function ($stateProvider,   $urlRouterProvider) {

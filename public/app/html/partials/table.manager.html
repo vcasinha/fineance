@@ -10,7 +10,7 @@
 		<div class="btn-group">
 			<button class="btn btn-sm btn-default" ng-click="open()">NEW</button>
 			<button class="btn btn-sm btn-default" 
-				ng-model="table.show_delete"
+				ng-model="table.edit_mode"
 			  	btn-checkbox
 			  	btn-checkbox-true="true"
 			  	btn-checkbox-false="false" ng-disabled="table.show_trashed">EDIT</button>
@@ -19,7 +19,7 @@
 			  	ng-model="table.show_trashed"
 			  	btn-checkbox
 			  	btn-checkbox-true="true"
-			  	btn-checkbox-false="false" ng-disabled="table.show_delete">RECOVER</button>
+			  	btn-checkbox-false="false" ng-disabled="table.edit_mode">RECOVER</button>
 		</div>
 	</div>
 	<div class="col-xs-6">
@@ -38,7 +38,7 @@
 		<div class="panel panel-default">
 		<table class="table table-striped table-condensed">
 		    <tr>
-				<th ng-show="table.show_trashed || table.show_delete"></th>
+				<th ng-show="table.show_trashed || table.edit_mode"></th>
 				<th 
 					ng-repeat="field in table.fields"
 					ng-click="table.toggleOrder(field.name)"
@@ -53,14 +53,19 @@
 				</th>
 		    </tr>
 		    <tr ng-repeat="record in table.records">
-				<td ng-hide="!table.show_delete" style="width:2%">
-					<a ng-click="table.destroy(record)" class="btn btn-xs btn-danger">
-						<i class="glyphicon glyphicon-trash"></i>
+				<td ng-show="table.edit_mode || table.show_trashed">
+					<a ng-show="table.edit_mode" 
+						ng-click="table.destroy(record)" 
+						class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i>
 					</a>
-				</td>
-				<td ng-show="table.show_trashed" style="width:2%">
-					<a ng-click="table.recover(record)" class="btn btn-xs btn-success">
-						<i class="glyphicon glyphicon-share-alt"></i>
+					<a ng-show="table.edit_mode"
+						ng-repeat="action in table.actions"
+						ng-click="modalDialog(action.name, record)" 
+						class="btn btn-xs btn-default">{{action.label}}</i>
+					</a>
+					<a ng-show="table.show_trashed" 
+						ng-click="table.recover(record)" 
+						class="btn btn-xs btn-success"><i class="glyphicon glyphicon-share-alt"></i>
 					</a>
 				</td>
 				<td ng-repeat="field in table.fields" 

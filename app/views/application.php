@@ -6,6 +6,7 @@
 		<link rel="stylesheet" type="text/css" href="/app/css/theme2.css">
 		<link rel="stylesheet" type="text/css" href="/app/css/style.css">
 		<link rel="stylesheet" href="/bower_components/nvd3/nv.d3.css"/>
+		<title>Fine-ance</title>
 	</head>
 	<body ng-app="fineance" ng-cloak>
 		<div class="container-fluid" style="margin-top:5px;">
@@ -48,11 +49,18 @@
 		<script src="/app/lib/factories.js"></script>
 		<script src="/app/lib/directives.js"></script>
 		<script src="/app/lib/oo/table.js"></script>
-		<script src="/app/controllers/account.js"></script>
-		<script src="/app/controllers/transaction.js"></script>
-		<script src="/app/controllers/category.js"></script>
-		<script src="/app/controllers/group.js"></script>
-		<script src="/app/controllers/statistics.js"></script>
-		<script src="/app/controllers/pages.js"></script>
+		<!-- Modules -->
+		<script src="/app/modules/account/account.controllers.js"></script>
+		<script src="/app/modules/account/account.factories.js"></script>
+		<script src="/app/modules/category/category.controllers.js"></script>
+		<script src="/app/modules/category/category.factories.js"></script>
+		<script src="/app/modules/group/group.controllers.js"></script>
+		<script src="/app/modules/group/group.factories.js"></script>
+		<script src="/app/modules/page/page.controllers.js"></script>
+		<script src="/app/modules/page/page.factories.js"></script>
+		<script src="/app/modules/statistics/statistics.controllers.js"></script>
+		<script src="/app/modules/statistics/statistics.factories.js"></script>
+		<script src="/app/modules/transaction/transaction.controllers.js"></script>
+		<script src="/app/modules/transaction/transaction.factories.js"></script>
 	</body>
 </html>

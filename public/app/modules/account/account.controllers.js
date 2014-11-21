@@ -1,36 +1,37 @@
-var app = angular.module('fineance.category', ['ui.router', 'ui.bootstrap']);
+var app = angular.module('fineance.account', ['fineance.account.factory']);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider,   $urlRouterProvider) {
 	$stateProvider
-		.state('category', {
-			url: '/category',
-			templateUrl: 'app/html/category/index.html',
-			controller: 'CategoryIndexController'
+		.state('account', {
+			url: '/acount',
+			templateUrl: 'app/html/account/index.html',
+			controller: 'AccountIndexController'
 		})
-		.state('category-create', {
-			url: '/category/create',
-			templateUrl: 'app/html/category/create.html',
-			controller: 'CategoryCreateController'
+		.state('account-create', {
+			url: '/account/create',
+			templateUrl: 'app/html/account/create.html',
+			controller: 'AccountCreateController'
 		})
-		.state('category-edit', {
+		.state('account-edit', {
 			url: '/category/{id}',
 			templateUrl: 'app/html/category/edit.html',
 			controller: 'CategoryEditController'
 		});
 }]);
 
-app.controller('CategoryIndexController', ['$scope', 'Category',
-function ($scope, Category) {
+app.controller('AccountIndexController', ['$scope', 'Account',
+function ($scope, Account) {
 	$scope.table_params = {
-		model: Category,
+		model: Account,
 		fields: [
-			{ name:"name", label:"Name", type: 'text', placeholder: 'Fixed Income' },
-			{ name:"description", label:"Description", type: 'text', placeholder: 'Fixed recurring income' },
+			{ name:"name", label:"Name", type: 'text', placeholder: 'Personal Checking', required:true },
+			{ name:"description", label:"Description", type: 'text', placeholder: 'Checking account' },
+			{ name:"created_at", label:"Created on", type: 'date', viewonly: true}
 		],
 		order: {
 			'name':'ASC'
 		},
-		sortable: ['name'],
+		sortable: ['name']
 	};
 }]);
 

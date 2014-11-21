@@ -93,8 +93,12 @@ class APIController extends BaseController {
 	public function destroy($id)
 	{
 		$record = $this->model->find($id);
+		if(!$record)
+		{
+			throw new Exception("Not found " . $id);
+		}
 		$record->delete();
-		return $record;
+		return $id;
 	}
 
 	/*

@@ -10,13 +10,14 @@
 				<label>Description</label>
 				<input type="text" class="form-control" ng-model="record.description" placeholder="payment"/>
 			</div>
-			<button ng-click="save(record)" class="btn" ng-disabled="form.$invalid">SAVE</button>
+			<button ng-click="save(record)" class="btn btn-default" ng-disabled="form.$invalid">SAVE</button>
+			<button ng-click="cancel()" class="btn btn-default">CANCEL</button>
 		</div>
 		<div class="col-xs-4">
 			<h3>Pick categories</h3>
 			<ul class="list-group">
-				<li ng-repeat="a in categories" class="list-group-item" ng-class="{'list-group-item-success': inGroup(a)}" ng-click="toggle(a)">
-				{{a.name}}
+				<li ng-repeat="category in categories" class="list-group-item" ng-class="{'list-group-item-success': inGroup(category)}" ng-click="toggle(category)">
+				{{category.name}}
 				</li>
 			</ul>
 		</div>
